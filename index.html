@@ -248,6 +248,12 @@ section.top{margin-top:8px}
 .sheet-handle,.sheet-close,.mobonly,.tapnote{display:none}
 .sheet-head{display:grid;gap:0}
 .sheet-close{font:inherit;font-size:15px;font-weight:700;line-height:1;height:40px;padding:0 14px;gap:6px;flex:none;border-radius:999px;border:0;background:var(--ink);color:var(--bg);cursor:pointer;align-items:center;justify-content:center}
+.panel-empty{display:grid;justify-items:center;text-align:center;gap:8px;padding:48px 16px;border:2px dashed var(--line);border-radius:14px}
+.panel-empty img{width:96px;height:auto}
+.panel-empty b{font-family:var(--f-display);font-weight:400;font-size:24px;line-height:1.25}
+.panel-empty span{color:var(--muted);font-size:15px}
+.panel.empty .sheet-body,.panel.empty .sheet-nav{display:none}
+.panel:not(.empty) .panel-empty{display:none}
 .sheet-nav{display:flex;gap:8px;justify-content:space-between;padding-top:4px}
 .navbtn{font:inherit;font-size:15px;font-weight:700;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .navbtn.next{background:var(--flame);border-color:var(--flame);color:var(--on-accent);flex:1}
@@ -461,6 +467,11 @@ section.top{margin-top:8px}
           <button type="button" class="sheet-close" id="sheetClose" aria-label="설명 닫기"><span aria-hidden="true">✕</span> 닫기</button>
         </div>
       </div>
+      <div class="panel-empty" id="panelEmpty">
+        <img id="emptyFace" alt="" width="140" height="115">
+        <b>배치도에서 방을 눌러 보세요</b>
+        <span>방마다 숨어 있는 가스안전 수칙이 여기에 나타나요.</span>
+      </div>
       <div class="sheet-body" id="sheetBody">
         <div class="chips" id="chips"></div>
         <h2 id="pTitle" tabindex="-1"></h2>
@@ -589,6 +600,7 @@ function pick(r,key){
   return r[key]||"";
 }
 function render(){
+  $("panel").classList.toggle("empty",!picked); // 방을 누르기 전에는 안내만
   const R=ROOMS[current];
   $("pTitle").textContent=R.title; $("pOne").innerHTML=R.one; // 내부 고정 문구만 사용
   const ul=$("pRules"); ul.innerHTML="";
@@ -868,6 +880,7 @@ $("shareImg").addEventListener("click",async()=>{
   }
 });
 
+$("emptyFace").src=document.querySelector(".guide-face").src;
 // 아직 안 본 곳의 ! 표시 둘레에 퍼지는 원 넣기
 document.querySelectorAll(".pin").forEach(g=>{
   const ring=document.createElementNS("http://www.w3.org/2000/svg","circle");
