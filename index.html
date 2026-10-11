@@ -578,7 +578,7 @@ const ROOMS = {
 };
 const ORDER=["kitchen","outside","bath","boiler","living","door"];
 const TAG={do:"이렇게 해요",dont:"하면 안 돼요",know:"알아 둬요"};
-let mode="lpg", current="kitchen";
+let mode="lpg", current="kitchen", picked=false; // picked: 사용자가 방을 직접 골랐는지
 const seen=new Set();
 const $=id=>document.getElementById(id);
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -608,11 +608,11 @@ function render(){
   $("prevRoom").textContent="← "+ROOMS[prev].name; $("prevRoom").dataset.id=prev;
   $("nextRoom").textContent="다음: "+ROOMS[next].name+" →"; $("nextRoom").dataset.id=next;
   document.querySelectorAll(".room").forEach(g=>{
-    g.classList.toggle("on",g.dataset.id===current);
+    g.classList.toggle("on",picked && g.dataset.id===current);
     g.classList.toggle("done",seen.has(g.dataset.id));
   });
   document.querySelectorAll("#chips button").forEach(b=>{
-    b.setAttribute("aria-pressed",String(b.dataset.id===current));
+    b.setAttribute("aria-pressed",String(picked && b.dataset.id===current));
     b.classList.toggle("done",seen.has(b.dataset.id));
   });
   const n=seen.size;
@@ -664,7 +664,7 @@ function closeSheet(){
 }
 function go(id,fromMap){
   if(!ROOMS[id]) return;
-  current=id; seen.add(id); render();
+  current=id; picked=true; seen.add(id); render();
   if(isNarrow() && fromMap) openSheet();
 }
 ORDER.forEach(id=>{
@@ -890,7 +890,6 @@ function gasTagText(){
 if(narrowMQ.addEventListener) narrowMQ.addEventListener("change",fitSvgToScreen); else if(narrowMQ.addListener) narrowMQ.addListener(fitSvgToScreen);
 fitSvgToScreen();
 
-seen.add("kitchen");
 setMode(store.get("gasmap-mode"));
 makeImage();
 })();
