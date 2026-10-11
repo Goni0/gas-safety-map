@@ -178,8 +178,17 @@ section.top{margin-top:8px}
 @media (max-width:660px){.sharebox{grid-template-columns:1fr}}
 #shareUrl{font-family:var(--f-mono);font-size:14px}
 .qrcard{justify-items:center;text-align:center}
-#qr{width:100%;max-width:220px;height:auto;background:#FFFFFF;border-radius:10px;border:1px solid var(--line)}
+.sharemini{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.sharemini .txt{display:grid;gap:6px;min-width:0}
+.sharemini .t{font-weight:700;font-size:15px}
+.sharemini .s{font-size:13px;color:var(--muted)}
+.sbtn{font:inherit;font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+.sbtn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.sbtns{display:flex;flex-wrap:wrap;gap:6px}
+#qr{width:88px;height:88px;flex:none;background:#FFFFFF;border-radius:8px;border:1px solid var(--line)}
+.minishare{font:inherit;font-size:13px;font-weight:700;color:var(--flame);background:none;border:0;padding:0;cursor:pointer;width:fit-content;text-decoration:underline;text-underline-offset:3px}
 #share{scroll-margin-top:12px}
+.sgap{display:block;height:.4em}
 .backmap{display:none;width:100%;padding-block:14px;font-size:16px}
 @media (max-width:860px){.backmap{display:block}}
 .house{scroll-margin-top:12px}
@@ -203,11 +212,7 @@ section.top{margin-top:8px}
   <div class="eyebrow">중·고등학생 가스안전 길잡이</div>
   <h1>우리집 <em>가스안전</em> 지도</h1>
   <p class="lede">지도에서 장소를 하나씩 눌러 보세요. 여섯 곳을 다 보면 퀴즈 이벤트 문제를 풀 수 있어요.</p>
-  <div class="sharebar">
-    <button type="button" class="btn ghost" id="copyLink">지도 링크 복사</button>
-    <a class="btn ghost" href="#share" id="toShare">QR코드로 공유</a>
-    <span class="msg left" id="copyMsg" aria-live="polite"></span>
-  </div>
+  <button type="button" class="minishare" id="toShare">지도 공유하기 ↓</button>
 </header>
 
 <section class="block top" aria-labelledby="eventH">
@@ -223,14 +228,7 @@ section.top{margin-top:8px}
   </div>
 </section>
 
-<div class="keys" aria-label="가장 중요한 세 가지">
-  <div class="key"><span class="when">가스 쓰기 전</span><b>창문 열기</b><span>냄새가 나는지 먼저 확인해요.</span></div>
-  <div class="key"><span class="when">가스 다 쓴 뒤</span><b>노브와 밸브 잠그기</b><span>가스레인지 노브와 밸브를 둘 다 잠가요.</span></div>
-  <div class="key alert"><span class="when">가스 냄새가 나면</span><b>불·전기 손대지 않기</b><span>밖으로 나가서 119에 알려요.</span></div>
-</div>
-
-<section class="block" aria-labelledby="mapH">
-  <h2 id="mapH">장소별로 알아보기</h2>
+<section class="block" aria-label="장소별 가스안전 수칙">
   <div class="mode" role="group" aria-label="우리 집 가스 종류">
     <span>우리 집 가스는?</span>
     <div class="seg">
@@ -359,21 +357,8 @@ section.top{margin-top:8px}
   </div>
 </section>
 
-<section class="block" aria-labelledby="leakH">
-  <div class="leak">
-    <h2 id="leakH">가스 냄새가 나면 이렇게!</h2>
-    <ol class="steps">
-      <li><b>불·전기 만지지 않기</b><span>스위치, 콘센트, 라이터는 절대 안 돼요. 작은 불꽃 하나로 터질 수 있어요.</span></li>
-      <li><b>노브와 밸브 잠그기</b><span>가스레인지 노브와 밸브를 잠가요.</span></li>
-      <li><b>창문 열기</b><span id="ventTip">문과 창문을 활짝 열어요. LPG가스는 바닥에 고여 있어요.</span></li>
-      <li><b>밖에서 신고하기</b><span>집 밖으로 나가 119에 전화해요. 주소와 상황을 말해요.</span></li>
-    </ol>
-    <p class="after">점검받기 전까지는 가스를 쓰지 않아요.</p>
-  </div>
-</section>
-
 <section class="block" aria-labelledby="callH">
-  <h2 id="callH">급할 때 연락할 곳</h2>
+  <h2 id="callH">가스안전 연락처</h2>
   <p class="lead">119와 한국가스안전공사 번호는 이미 들어가 있어요. 우리 집 가스 회사 번호만 적으면 세 번호가 한 장의 이미지로 만들어져요. 휴대폰에 저장하거나 가족에게 보내 두세요.</p>
   <div class="maker">
     <div class="card">
@@ -385,39 +370,36 @@ section.top{margin-top:8px}
       <div class="k" style="margin-top:12px">이럴 땐 가스 회사에 먼저 연락해요</div>
       <ul>
         <li>LPG가스 용기를 바꿀 때</li>
-        <li>이사할 때</li>
+        <li>이사하기 3일 전 막음조치가 필요할 때</li>
         <li>가스 공사나 난방기 설치를 할 때</li>
-        <li>여행으로 오래 집을 비울 때</li>
+        <li>집을 오래 비워야 할 때</li>
       </ul>
     </div>
     <div class="preview" id="preview">
       <div class="k">미리 보기 (적는 대로 바로 바뀌어요)</div>
       <p class="empty" id="previewEmpty">이미지를 만드는 중이에요.</p>
       <img id="outImg" alt="119, 한국가스안전공사, 우리 집 가스 회사 번호가 담긴 연락처 이미지" hidden>
-      <div class="btns"><button type="button" class="btn" id="saveImg" hidden>이미지 저장·공유</button></div>
+      <div class="btns"><button type="button" class="btn" id="saveImg" hidden>이미지 저장</button><button type="button" class="btn ghost" id="shareImg" hidden>공유하기</button></div>
       <p class="msg" id="outMsg">휴대폰에서는 이미지를 길게 눌러 저장하거나 공유할 수 있어요.</p>
     </div>
   </div>
 </section>
 
-<section class="block" id="share" aria-labelledby="shareH">
-  <h2 id="shareH">친구와 가족에게 공유하기</h2>
-  <p class="lead">링크를 복사해서 카카오톡이나 문자로 보내 주세요. 교실에서는 QR코드를 화면에 띄우면 바로 들어올 수 있어요.</p>
-  <div class="sharebox">
-    <div class="card">
-      <div class="k">가스안전 지도 링크</div>
-      <input id="shareUrl" readonly value="https://claude.ai/artifact/TK15zVd9T1su3Ub5k9wQnx" aria-label="가스안전 지도 링크">
-      <div class="btns"><button type="button" class="btn" id="copyLink2">링크 복사하기</button></div>
-      <p class="msg left" id="copyMsg2" aria-live="polite"></p>
-    </div>
-    <div class="card qrcard">
-      <div class="k">QR코드</div>
-      <canvas id="qr" width="600" height="600" aria-label="가스안전 지도로 가는 QR코드" role="img"></canvas>
-      <p class="msg" id="qrMsg" hidden>QR코드를 불러오지 못했어요. 링크 복사를 이용해 주세요.</p>
-      <div class="btns"><button type="button" class="btn ghost" id="saveQr" hidden>QR코드 이미지 저장</button></div>
+<section class="block" id="share" aria-label="지도 공유하기">
+  <div class="sharemini">
+    <canvas id="qr" width="264" height="264" role="img" aria-label="가스안전 지도로 가는 QR코드"></canvas>
+    <div class="txt">
+      <div class="t">친구에게 지도 공유하기</div>
+      <div class="s" id="qrMsg">QR코드를 찍거나 링크를 보내 주세요.</div>
+      <div class="sbtns">
+        <button type="button" class="sbtn" id="copyLink">링크 복사</button>
+        <button type="button" class="sbtn" id="shareLink" hidden>공유하기</button>
+      </div>
+      <input id="shareUrl" readonly value="https://claude.ai/artifact/TK15zVd9T1su3Ub5k9wQnx" aria-label="가스안전 지도 링크" hidden>
     </div>
   </div>
 </section>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
@@ -510,6 +492,7 @@ function render(){
   $("eventSeen").textContent= n===6 ? "여섯 곳을 모두 봤어요. 이제 퀴즈에 도전해 보세요!" : "지금까지 "+n+" / 6곳 봤어요.";
   breakSentences(document.querySelector(".wrap"));
 }
+function setMsg(el,text){ el.textContent=text; breakSentences(el); }
 // 문장이 끝나면 줄을 바꿔 한 문장씩 읽히게 하기
 function breakSentences(root){
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){
@@ -520,9 +503,11 @@ function breakSentences(root){
   }});
   const nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
   nodes.forEach(n=>{
-    const parts=n.nodeValue.split(/(?<=[.!?])\s+(?=\S)/);
+    const parts=[]; const re=/[.!?]\s+(?=\S)/g; let last=0, mm;
+    while((mm=re.exec(n.nodeValue))){ parts.push(n.nodeValue.slice(last, mm.index+1)); last=re.lastIndex; }
+    parts.push(n.nodeValue.slice(last));
     const frag=document.createDocumentFragment();
-    parts.forEach((t,i)=>{ if(i) frag.append(document.createElement("br")); frag.append(t); });
+    parts.forEach((t,i)=>{ if(i){ const g=document.createElement("span"); g.className="sgap"; g.setAttribute("aria-hidden","true"); frag.append(g); } frag.append(t); });
     n.replaceWith(frag);
   });
 }
@@ -542,42 +527,30 @@ document.querySelectorAll(".room").forEach(g=>{
   g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(g.dataset.id,false); } });
 });
 
-// 공유: 링크 복사 + QR코드
-// 홈페이지에 따로 올린 파일이면 지금 열려 있는 주소로 링크와 QR을 만듦
+// 지도 공유: 링크 복사, 공유 창, QR코드
 if(window.GASMAP_STANDALONE && /^https?:$/.test(location.protocol)) $("shareUrl").value=location.origin+location.pathname;
 const SHARE_URL=$("shareUrl").value;
-function copyLink(msgId){
-  const msg=$(msgId);
-  const done=()=>{ msg.textContent="링크를 복사했어요. 카카오톡이나 문자에 붙여 넣어 보내 주세요."; };
-  const fallback=()=>{ const i=$("shareUrl"); i.focus(); i.select(); i.setSelectionRange(0,i.value.length);
-    msg.textContent="복사가 막혀 있어요. 링크 칸의 주소를 길게 눌러 복사해 주세요.";
-    if(msgId==="copyMsg") $("share").scrollIntoView({block:"start"}); };
-  try{
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(SHARE_URL).then(done,fallback); }
-    else fallback();
-  }catch(e){ fallback(); }
-}
-$("copyLink").addEventListener("click",()=>copyLink("copyMsg"));
-$("copyLink2").addEventListener("click",()=>copyLink("copyMsg2"));
-$("toShare").addEventListener("click",e=>{ e.preventDefault(); $("share").scrollIntoView({behavior:"smooth",block:"start"}); });
-
-let qrBlob=null;
-function drawQr(){
+$("toShare").addEventListener("click",()=>$("share").scrollIntoView({behavior:"smooth",block:"center"}));
+$("copyLink").addEventListener("click",()=>{
+  const msg=$("qrMsg");
+  const fail=()=>{ const i=$("shareUrl"); i.hidden=false; i.focus(); i.select(); setMsg(msg,"복사가 막혀 있어요. 아래 주소를 길게 눌러 복사해 주세요."); };
+  try{ if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(SHARE_URL).then(()=>{ setMsg(msg,"링크를 복사했어요. 카카오톡이나 문자에 붙여 넣어 주세요."); },fail); else fail(); }catch(e){ fail(); }
+});
+if(window.GASMAP_STANDALONE && navigator.share) $("shareLink").hidden=false;
+$("shareLink").addEventListener("click",async()=>{
+  try{ await navigator.share({title:"우리집 가스안전 지도", text:"가스안전 지도 보고 퀴즈 이벤트도 참여해요!", url:SHARE_URL}); }
+  catch(e){ if(!(e && e.name==="AbortError")) $("shareLink").hidden=true; }
+});
+(function drawQr(){
   const c=$("qr");
-  if(typeof window.qrcode!=="function"){ c.hidden=true; $("qrMsg").hidden=false; return; }
+  if(typeof window.qrcode!=="function"){ c.hidden=true; return; }
   try{
     const q=window.qrcode(0,"M"); q.addData(SHARE_URL); q.make();
-    const n=q.getModuleCount(), quiet=4, size=c.width, cell=Math.floor(size/(n+quiet*2)), off=Math.floor((size-cell*n)/2);
+    const n=q.getModuleCount(), quiet=3, size=c.width, cell=Math.floor(size/(n+quiet*2)), off=Math.floor((size-cell*n)/2);
     const x=c.getContext("2d"); x.fillStyle="#FFFFFF"; x.fillRect(0,0,size,size); x.fillStyle="#14213A";
     for(let r=0;r<n;r++) for(let k=0;k<n;k++) if(q.isDark(r,k)) x.fillRect(off+k*cell,off+r*cell,cell,cell);
-    c.toBlob(b=>{ qrBlob=b; if(b && downloads) $("saveQr").hidden=false; },"image/png");
-  }catch(e){ c.hidden=true; $("qrMsg").hidden=false; }
-}
-$("saveQr").addEventListener("click",async()=>{
-  if(!downloads||!qrBlob) return;
-  try{ await downloads.save({filename:"가스안전지도-QR.png", data:qrBlob}); }
-  catch(e){ if(e&&e.code!=="declined"&&e.code!=="rate_limited") $("saveQr").hidden=true; }
-});
+  }catch(e){ c.hidden=true; }
+})();
 
 $("backMap").addEventListener("click",()=>{
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -593,7 +566,6 @@ function setMode(m){
   document.querySelectorAll(".lngOnly").forEach(e=>e.setAttribute("display", mode==="lng" ? "inline" : "none"));
   $("gasTag").textContent = gasTagText();
   $("modeNote").textContent = mode==="lpg" ? "집 밖에 LPG가스 용기가 있는 집이에요." : "가스관으로 가스가 들어오는 집이에요.";
-  $("ventTip").textContent = mode==="lpg" ? "문과 창문을 활짝 열어요. LPG가스는 바닥에 고여 있어요." : "문과 창문을 활짝 열어요. 도시가스는 위로 올라가니 창문 위쪽까지 열어요.";
   store.set("gasmap-mode",mode);
   render();
 }
@@ -607,7 +579,7 @@ document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",(
 // 연락처 이미지 만들기
 let lastBlob=null, lastUrl=null, downloads=null;
 if(window.claude && typeof window.claude.use==="function"){
-  window.claude.use("downloads").then(d=>{ downloads=d; if(d && lastBlob) $("saveImg").hidden=false; if(d && qrBlob) $("saveQr").hidden=false; }).catch(()=>{});
+  window.claude.use("downloads").then(d=>{ downloads=d; shareBlocked=true; updateImgButtons(); }).catch(()=>{});
 }
 function fit(x,text,weight,size,family,maxW){
   let s=size; x.font=weight+" "+s+"px "+family;
@@ -618,7 +590,7 @@ async function makeImage(){
   const seq=++makeSeq;
   const DISP='"Do Hyeon","Apple SD Gothic Neo","Malgun Gothic",sans-serif';
   const BODY='"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif';
-  try{ await Promise.all([document.fonts.load('80px "Do Hyeon"'),document.fonts.load('700 34px "IBM Plex Sans KR"'),document.fonts.load('400 30px "IBM Plex Sans KR"')]); }catch(e){}
+  try{ if(document.fonts && document.fonts.load){ await Promise.race([Promise.all([document.fonts.load('80px "Do Hyeon"'),document.fonts.load('700 34px "IBM Plex Sans KR"'),document.fonts.load('400 30px "IBM Plex Sans KR"')]), new Promise(r=>setTimeout(r,1500))]); } }catch(e){}
   const W=1080,H=1350,c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
   const INK="#14213A",MUTED="#55627A",BLUE="#1F5BD8",RED="#C8243A",AMBER="#F2A900",LINE="#C9D3DF";
   x.fillStyle="#FFFFFF"; x.fillRect(0,0,W,H);
@@ -630,7 +602,7 @@ async function makeImage(){
   const L=80, R=W-80;
   x.textBaseline="alphabetic";
   x.fillStyle=MUTED; x.font="700 32px "+BODY; x.fillText("우리집 가스안전",L,130);
-  x.fillStyle=INK; x.font="88px "+DISP; x.fillText("급할 때 연락할 곳",L,230);
+  x.fillStyle=INK; x.font="88px "+DISP; x.fillText("가스안전 연락처",L,230);
   function row(y,label,value,color){
     x.strokeStyle=LINE; x.lineWidth=3; x.beginPath(); x.roundRect ? x.roundRect(L,y,R-L,190,24) : x.rect(L,y,R-L,190); x.stroke();
     x.fillStyle=MUTED; x.font="400 32px "+BODY; x.fillText(label,L+40,y+62);
@@ -653,23 +625,59 @@ async function makeImage(){
     x.fillStyle="#FFFFFF"; x.font="700 24px "+BODY; x.textAlign="center"; x.fillText(String(i+1),sx+20,sy-2); x.textAlign="left";
     x.fillStyle=INK; x.font="400 32px "+BODY; x.fillText(s,sx+56,sy); });
   x.fillStyle=MUTED; x.font="400 24px "+BODY; x.fillText("점검받기 전까지는 가스를 쓰지 않아요.",L,1290);
-  const blob=await new Promise(r=>c.toBlob(r,"image/png"));
+  let dataUrl="";
+  try{ dataUrl=c.toDataURL("image/png"); }catch(e){}
   if(seq!==makeSeq) return; // 더 최근 입력으로 다시 만드는 중
-  if(!blob){ $("previewEmpty").textContent="이미지를 만들지 못했어요. 내용을 다시 적어 보세요."; return; }
-  lastBlob=blob; if(lastUrl) URL.revokeObjectURL(lastUrl); lastUrl=URL.createObjectURL(blob);
-  $("outImg").src=lastUrl; $("outImg").hidden=false; $("previewEmpty").hidden=true;
-  $("saveImg").hidden=!downloads;
+  if(!dataUrl){ $("previewEmpty").textContent="이미지를 만들지 못했어요. 내용을 다시 적어 보세요."; return; }
+  $("outImg").src=dataUrl; $("outImg").hidden=false; $("previewEmpty").hidden=true;
+  lastBlob=await new Promise(r=>{ try{ c.toBlob(r,"image/png"); }catch(e){ r(null); } });
+  if(!lastBlob){ try{ lastBlob=await (await fetch(dataUrl)).blob(); }catch(e){} }
+  updateImgButtons();
+}
+const IMG_NAME="가스안전-연락처.png";
+const inClaude=()=>!!downloads;
+function canShareFile(){
+  try{ return !!(lastBlob && navigator.canShare && typeof File==="function" && navigator.canShare({files:[new File([lastBlob],IMG_NAME,{type:"image/png"})]})); }catch(e){ return false; }
+}
+let shareBlocked=false;
+function updateImgButtons(){
+  $("saveImg").hidden=!lastBlob;
+  $("shareImg").hidden=!lastBlob || shareBlocked || !canShareFile();
 }
 let makeTimer=null;
 ["supName","supTel"].forEach(id=>$(id).addEventListener("input",()=>{ clearTimeout(makeTimer); makeTimer=setTimeout(makeImage,350); }));
 $("saveImg").addEventListener("click",async()=>{
-  if(!downloads||!lastBlob) return;
-  try{ await downloads.save({filename:"가스안전-연락처.png", data:lastBlob}); $("outMsg").textContent="저장했어요."; }
-  catch(e){
-    const code=e&&e.code;
-    if(code==="declined") return;
-    if(code==="rate_limited"){ $("outMsg").textContent="잠시 후 다시 눌러 주세요."; return; }
-    $("saveImg").hidden=true; $("outMsg").textContent="여기서는 저장 버튼을 쓸 수 없어요. 이미지를 길게 눌러 저장해 주세요.";
+  if(!lastBlob) return;
+  const msg=$("outMsg");
+  if(downloads){ // Claude 안에서 볼 때
+    try{ await downloads.save({filename:IMG_NAME, data:lastBlob}); setMsg(msg,"저장했어요."); }
+    catch(e){
+      const code=e&&e.code;
+      if(code==="declined") return;
+      if(code==="rate_limited"){ setMsg(msg,"잠시 후 다시 눌러 주세요."); return; }
+      setMsg(msg,"여기서는 저장 버튼을 쓸 수 없어요. 이미지를 길게 눌러 저장해 주세요.");
+    }
+    return;
+  }
+  if(window.claude){ setMsg(msg,"여기서는 저장 버튼을 쓸 수 없어요. 이미지를 길게 눌러 저장해 주세요."); return; }
+  // 일반 웹사이트에서 볼 때: 파일로 내려받기
+  try{
+    const url=URL.createObjectURL(lastBlob);
+    const a=document.createElement("a"); a.href=url; a.download=IMG_NAME; a.rel="noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),4000);
+    setMsg(msg,"이미지를 내려받았어요. 안 되면 이미지를 길게 눌러 저장해 주세요.");
+  }catch(e){ setMsg(msg,"이미지를 길게 눌러 저장해 주세요."); }
+});
+$("shareImg").addEventListener("click",async()=>{
+  if(!lastBlob) return;
+  const msg=$("outMsg");
+  try{
+    await navigator.share({files:[new File([lastBlob],IMG_NAME,{type:"image/png"})], title:"가스안전 연락처"});
+  }catch(e){
+    if(e && e.name==="AbortError") return; // 사용자가 공유 창을 닫음
+    shareBlocked=true; updateImgButtons();
+    setMsg(msg,"여기서는 공유 창을 열 수 없어요. 이미지를 저장한 뒤 카카오톡으로 보내 주세요.");
   }
 });
 
@@ -693,7 +701,6 @@ fitSvgToScreen();
 seen.add("kitchen");
 setMode(store.get("gasmap-mode"));
 makeImage();
-drawQr();
 })();
 </script>
 
