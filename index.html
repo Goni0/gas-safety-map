@@ -754,7 +754,9 @@ async function makeImage(){
   const seq=++makeSeq;
   const DISP='"Do Hyeon","Apple SD Gothic Neo","Malgun Gothic",sans-serif';
   const BODY='"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif';
-  try{ if(document.fonts && document.fonts.load){ await Promise.race([Promise.all([document.fonts.load('80px "Do Hyeon"'),document.fonts.load('700 34px "IBM Plex Sans KR"'),document.fonts.load('400 30px "IBM Plex Sans KR"')]), new Promise(r=>setTimeout(r,1500))]); } }catch(e){}
+  // 웹 글꼴은 한글을 여러 조각으로 나눠 불러오기 때문에, 이미지에 쓸 글자를 직접 알려 줘야 빠짐없이 받아와요
+  const IMG_TEXT="우리집 가스안전 연락처 불이 나거나 가스가 샐 때 119 한국가스안전공사 1544-4500 우리 집 가스 회사 (이름을 적어 주세요) (번호를 적어 주세요) 가스 냄새가 나면 불·전기 만지지 않기 노브와 밸브 잠그기 창문 활짝 열기 밖에 나가서 119 신고 점검받기 전까지는 가스를 쓰지 않아요. 0123456789-"+$("supName").value+$("supTel").value;
+  try{ if(document.fonts && document.fonts.load){ await Promise.race([Promise.all([document.fonts.load('88px "Do Hyeon"',IMG_TEXT),document.fonts.load('700 34px "IBM Plex Sans KR"',IMG_TEXT),document.fonts.load('400 30px "IBM Plex Sans KR"',IMG_TEXT)]), new Promise(r=>setTimeout(r,3000))]); } }catch(e){}
   const W=1080,H=1350,c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
   const INK="#14213A",MUTED="#55627A",BLUE="#1F5BD8",RED="#C8243A",AMBER="#F2A900",LINE="#C9D3DF";
   x.fillStyle="#FFFFFF"; x.fillRect(0,0,W,H);
@@ -813,6 +815,11 @@ function updateImgButtons(){
   $("shareImg").hidden=!lastBlob || shareBlocked || !canShareFile();
 }
 let makeTimer=null;
+// 글꼴이 늦게 도착하면 이미지를 다시 그려서 깨진 글자가 남지 않게 (최대 3번)
+let fontRedraws=0;
+if(document.fonts && document.fonts.addEventListener){
+  document.fonts.addEventListener("loadingdone",()=>{ if(fontRedraws>=3) return; fontRedraws++; clearTimeout(makeTimer); makeTimer=setTimeout(makeImage,250); });
+}
 ["supName","supTel"].forEach(id=>$(id).addEventListener("input",()=>{ clearTimeout(makeTimer); makeTimer=setTimeout(makeImage,350); }));
 $("saveImg").addEventListener("click",async()=>{
   if(!lastBlob) return;
