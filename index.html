@@ -153,6 +153,8 @@ section.top{margin-top:8px}
 .prize{background:var(--danger);color:var(--on-accent);border-radius:999px;padding:2px 12px;font-size:14px}
 .event h2{font-size:clamp(30px,4.6vw,44px);margin-block:6px 8px}
 .event p b{color:var(--danger)}
+.event .period{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-weight:700;font-size:17px;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.event .period span{background:var(--ink);color:var(--bg);font-size:13px;border-radius:6px;padding:2px 8px}
 .event p{color:var(--ink);max-width:52ch}
 .event .seen{font-size:15px;color:var(--muted);margin-top:6px}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:var(--bg);font-family:var(--f-display);font-size:24px;text-decoration:none;padding:14px 26px;border-radius:14px;white-space:nowrap}
@@ -220,6 +222,7 @@ section.top{margin-top:8px}
     <div>
       <div class="tagline">가스안전 퀴즈 이벤트 <span class="prize">10명 추첨</span></div>
       <h2 id="eventH">퀴즈 풀고 햄버거 받아 가세요!</h2>
+      <p class="period"><span>참여 기간</span> 10월 13일(화) ~ 11월 12일(목)</p>
       <p>퀴즈에 참여한 사람 중 <b>10명을 추첨해 햄버거 기프티콘</b>을 드려요. 정답은 모두 아래 지도 안에 있어요.</p>
       <p class="seen" id="eventSeen">지금까지 1 / 6곳 봤어요.</p>
     </div>
@@ -395,7 +398,7 @@ section.top{margin-top:8px}
         <button type="button" class="sbtn" id="copyLink">링크 복사</button>
         <button type="button" class="sbtn" id="shareLink" hidden>공유하기</button>
       </div>
-      <input id="shareUrl" readonly value="https://claude.ai/artifact/TK15zVd9T1su3Ub5k9wQnx" aria-label="가스안전 지도 링크" hidden>
+      <input id="shareUrl" readonly value="https://goni0.github.io/gas-safety-map/" aria-label="가스안전 지도 링크" hidden>
     </div>
   </div>
 </section>
@@ -528,7 +531,6 @@ document.querySelectorAll(".room").forEach(g=>{
 });
 
 // 지도 공유: 링크 복사, 공유 창, QR코드
-if(window.GASMAP_STANDALONE && /^https?:$/.test(location.protocol)) $("shareUrl").value=location.origin+location.pathname;
 const SHARE_URL=$("shareUrl").value;
 $("toShare").addEventListener("click",()=>$("share").scrollIntoView({behavior:"smooth",block:"center"}));
 $("copyLink").addEventListener("click",()=>{
