@@ -191,8 +191,42 @@ section.top{margin-top:8px}
 .minishare{font:inherit;font-size:13px;font-weight:700;color:var(--flame);background:none;border:0;padding:0;cursor:pointer;width:fit-content;text-decoration:underline;text-underline-offset:3px}
 #share{scroll-margin-top:12px}
 .sgap{display:block;height:.4em}
-.backmap{display:none;width:100%;padding-block:14px;font-size:16px}
-@media (max-width:860px){.backmap{display:block}}
+/* 장소 설명: 컴퓨터는 지도 옆 카드, 휴대폰은 아래에서 올라오는 창 */
+.sheet-body{display:grid;gap:14px;min-width:0}
+.sheet-top{display:flex;align-items:center;gap:10px}
+.sheet-top .progress{flex:1}
+.sheet-handle,.sheet-close,.mobonly,.tapnote{display:none}
+.sheet-close{font:inherit;font-size:18px;line-height:1;width:40px;height:40px;flex:none;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;align-items:center;justify-content:center}
+.sheet-nav{display:flex;gap:8px;justify-content:space-between;padding-top:4px}
+.navbtn{font:inherit;font-size:15px;font-weight:700;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.navbtn.next{background:var(--flame);border-color:var(--flame);color:var(--on-accent);flex:1}
+.navbtn:focus-visible,.sheet-close:focus-visible,.rule summary:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.rule summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;row-gap:6px;align-items:center}
+.rule summary::-webkit-details-marker{display:none}
+.rule summary .tag{grid-column:1}
+.rule summary strong{grid-column:1}
+.rule summary .chev{grid-column:2;grid-row:1 / span 2;font-size:13px;font-weight:700;color:var(--flame);background:var(--flame-soft);border-radius:999px;padding:4px 10px;white-space:nowrap}
+.rule summary .chev::after{content:"왜?"}
+.rule[open] summary .chev::after{content:"접기"}
+.rule .why{padding-top:8px}
+@media (max-width:860px){
+  .mobonly{display:block;margin-top:.4em}
+  .tapnote{display:block;font-size:13px;color:var(--muted);margin-top:-6px}
+  .panel{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;flex-direction:column;gap:0;
+    max-height:62vh;max-height:62dvh;padding:8px 16px 0;border-radius:20px 20px 0 0;border-bottom:0;
+    box-shadow:0 -10px 30px rgba(10,20,40,.22);transform:translateY(105%);visibility:hidden;
+    transition:transform .28s ease, visibility 0s linear .28s}
+  .panel.open{transform:none;visibility:visible;transition:transform .28s ease}
+  .sheet-handle{display:block;width:44px;height:5px;border-radius:9px;background:var(--line);margin:2px auto 10px;flex:none}
+  .sheet-body{overflow-y:auto;overscroll-behavior:contain;min-height:0;flex:1;gap:12px;padding-bottom:12px}
+  .sheet-close{display:inline-flex}
+  .chips{display:none}
+  .panel h2{font-size:26px}
+  .sheet-nav{flex:none;border-top:1px solid var(--line);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface)}
+  .rule{padding:10px 12px}
+  .rule strong{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){.panel,.panel.open{transition:none}}
 .house{scroll-margin-top:12px}
 .maker{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
 @media (max-width:760px){.maker{grid-template-columns:1fr}}
@@ -346,16 +380,26 @@ section.top{margin-top:8px}
         </g>
       </svg>
       </div>
-      <p class="hint">빨간 <b>!</b> 표시나 방을 눌러 보세요. 본 곳은 초록색으로 바뀌어요.</p>
+      <p class="hint">빨간 <b>!</b> 표시나 방을 눌러 보세요. 본 곳은 초록색으로 바뀌어요.<span class="mobonly">설명은 화면 아래에서 올라와요.</span></p>
     </div>
 
-    <aside class="panel" id="panel" aria-live="polite">
-      <div class="progress"><span id="progText">1 / 6곳 봤어요</span><div class="bar"><i id="progBar"></i></div></div>
-      <div class="chips" id="chips"></div>
-      <h2 id="pTitle"></h2>
-      <p class="one" id="pOne"></p>
-      <ul class="rules" id="pRules"></ul>
-      <button type="button" class="btn ghost backmap" id="backMap">↑ 지도로 돌아가기</button>
+    <aside class="panel" id="panel" aria-labelledby="pTitle">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-body" id="sheetBody">
+        <div class="sheet-top">
+          <div class="progress"><span id="progText">1 / 6곳 봤어요</span><div class="bar"><i id="progBar"></i></div></div>
+          <button type="button" class="sheet-close" id="sheetClose" aria-label="설명 닫기">✕</button>
+        </div>
+        <div class="chips" id="chips"></div>
+        <h2 id="pTitle" tabindex="-1"></h2>
+        <p class="one" id="pOne"></p>
+        <p class="tapnote">수칙을 누르면 이유가 펼쳐져요.</p>
+        <ul class="rules" id="pRules"></ul>
+      </div>
+      <div class="sheet-nav">
+        <button type="button" class="navbtn" id="prevRoom"></button>
+        <button type="button" class="navbtn next" id="nextRoom"></button>
+      </div>
     </aside>
   </div>
 </section>
@@ -474,13 +518,21 @@ function render(){
   const R=ROOMS[current];
   $("pTitle").textContent=R.title; $("pOne").innerHTML=R.one; // 내부 고정 문구만 사용
   const ul=$("pRules"); ul.innerHTML="";
+  const openAll=!isNarrow(); // 컴퓨터는 이유까지 펼쳐 두고, 휴대폰은 수칙 제목만
   R.rules.forEach(r=>{
-    const li=document.createElement("li"); li.className="rule";
+    const li=document.createElement("li");
+    const d=document.createElement("details"); d.className="rule"; if(openAll) d.open=true;
+    const sm=document.createElement("summary");
     const tag=document.createElement("span"); tag.className="tag "+r.t; tag.textContent=TAG[r.t];
     const st=document.createElement("strong"); st.textContent=pick(r,"h");
+    const ch=document.createElement("span"); ch.className="chev"; ch.setAttribute("aria-hidden","true");
+    sm.append(tag,st,ch);
     const p=document.createElement("p"); p.className="why"; p.innerHTML=pick(r,"why"); // 내부 고정 문구만 사용
-    li.append(tag,st,p); ul.append(li);
+    d.append(sm,p); li.append(d); ul.append(li);
   });
+  const idx=ORDER.indexOf(current), prev=ORDER[(idx+5)%6], next=ORDER[(idx+1)%6];
+  $("prevRoom").textContent="← "+ROOMS[prev].name; $("prevRoom").dataset.id=prev;
+  $("nextRoom").textContent="다음: "+ROOMS[next].name+" →"; $("nextRoom").dataset.id=next;
   document.querySelectorAll(".room").forEach(g=>{
     g.classList.toggle("on",g.dataset.id===current);
     g.classList.toggle("done",seen.has(g.dataset.id));
@@ -514,20 +566,33 @@ function breakSentences(root){
     n.replaceWith(frag);
   });
 }
-function go(id,scroll){
+function isNarrow(){ return window.matchMedia("(max-width:860px)").matches; }
+const reduceMotion=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let lastRoomEl=null;
+function openSheet(){
+  const pnl=$("panel"); const wasOpen=pnl.classList.contains("open");
+  pnl.classList.add("open"); $("sheetBody").scrollTop=0;
+  // 지도가 설명 창에 가려지지 않게 지도를 화면 위쪽으로
+  const h=document.querySelector(".house").getBoundingClientRect();
+  if(h.top<0 || h.bottom>window.innerHeight*0.42) document.querySelector(".house").scrollIntoView({behavior:reduceMotion()?"auto":"smooth",block:"start"});
+  if(!wasOpen) setTimeout(()=>{ try{ $("pTitle").focus({preventScroll:true}); }catch(e){} }, 60);
+}
+function closeSheet(){
+  $("panel").classList.remove("open");
+  if(lastRoomEl){ try{ lastRoomEl.focus({preventScroll:true}); }catch(e){} }
+}
+function go(id,fromMap){
   if(!ROOMS[id]) return;
   current=id; seen.add(id); render();
-  if(scroll && window.matchMedia("(max-width:860px)").matches){
-    $("panel").scrollIntoView({behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto":"smooth", block:"start"});
-  }
+  if(isNarrow() && fromMap) openSheet();
 }
 ORDER.forEach(id=>{
   const b=document.createElement("button"); b.type="button"; b.dataset.id=id; b.textContent=ROOMS[id].name;
   b.addEventListener("click",()=>go(id,false)); $("chips").append(b);
 });
 document.querySelectorAll(".room").forEach(g=>{
-  g.addEventListener("click",()=>go(g.dataset.id,true));
-  g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(g.dataset.id,false); } });
+  g.addEventListener("click",()=>{ lastRoomEl=g; go(g.dataset.id,true); });
+  g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); lastRoomEl=g; go(g.dataset.id,true); } });
 });
 
 // 지도 공유: 링크 복사, 공유 창, QR코드
@@ -554,10 +619,18 @@ $("shareLink").addEventListener("click",async()=>{
   }catch(e){ c.hidden=true; }
 })();
 
-$("backMap").addEventListener("click",()=>{
-  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelector(".house").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
-});
+$("prevRoom").addEventListener("click",()=>{ go($("prevRoom").dataset.id,false); $("sheetBody").scrollTop=0; });
+$("nextRoom").addEventListener("click",()=>{ go($("nextRoom").dataset.id,false); $("sheetBody").scrollTop=0; });
+$("sheetClose").addEventListener("click",closeSheet);
+// 휴대폰에서 이유를 펼치면 펼친 내용이 보이게 살짝 스크롤
+$("pRules").addEventListener("toggle",e=>{
+  const d=e.target; if(!isNarrow() || !d.open) return;
+  try{ d.scrollIntoView({block:"nearest",behavior:reduceMotion()?"auto":"smooth"}); }catch(err){}
+},true);
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $("panel").classList.contains("open")) closeSheet(); });
+const wideMQ=window.matchMedia("(max-width:860px)");
+const onWide=()=>{ if(!isNarrow()) $("panel").classList.remove("open"); render(); };
+if(wideMQ.addEventListener) wideMQ.addEventListener("change",onWide); else if(wideMQ.addListener) wideMQ.addListener(onWide);
 
 function setMode(m){
   mode = m==="lng" ? "lng" : "lpg";
