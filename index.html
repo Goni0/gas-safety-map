@@ -191,12 +191,15 @@ section.top{margin-top:8px}
 .minishare{font:inherit;font-size:13px;font-weight:700;color:var(--flame);background:none;border:0;padding:0;cursor:pointer;width:fit-content;text-decoration:underline;text-underline-offset:3px}
 #share{scroll-margin-top:12px}
 .sgap{display:block;height:.4em}
+.burger{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+@media (max-width:660px){.sgap{height:.1em} body{line-height:1.55}}
 /* 장소 설명: 컴퓨터는 지도 옆 카드, 휴대폰은 아래에서 올라오는 창 */
 .sheet-body{display:grid;gap:14px;min-width:0}
 .sheet-top{display:flex;align-items:center;gap:10px}
 .sheet-top .progress{flex:1}
 .sheet-handle,.sheet-close,.mobonly,.tapnote{display:none}
-.sheet-close{font:inherit;font-size:18px;line-height:1;width:40px;height:40px;flex:none;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;align-items:center;justify-content:center}
+.sheet-head{display:grid;gap:0}
+.sheet-close{font:inherit;font-size:15px;font-weight:700;line-height:1;height:40px;padding:0 14px;gap:6px;flex:none;border-radius:999px;border:0;background:var(--ink);color:var(--bg);cursor:pointer;align-items:center;justify-content:center}
 .sheet-nav{display:flex;gap:8px;justify-content:space-between;padding-top:4px}
 .navbtn{font:inherit;font-size:15px;font-weight:700;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .navbtn.next{background:var(--flame);border-color:var(--flame);color:var(--on-accent);flex:1}
@@ -217,7 +220,8 @@ section.top{margin-top:8px}
     box-shadow:0 -10px 30px rgba(10,20,40,.22);transform:translateY(105%);visibility:hidden;
     transition:transform .28s ease, visibility 0s linear .28s}
   .panel.open{transform:none;visibility:visible;transition:transform .28s ease}
-  .sheet-handle{display:block;width:44px;height:5px;border-radius:9px;background:var(--line);margin:2px auto 10px;flex:none}
+  .sheet-head{flex:none;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:12px;touch-action:none}
+  .sheet-handle{display:block;width:44px;height:5px;border-radius:9px;background:var(--line);margin:2px auto 10px}
   .sheet-body{overflow-y:auto;overscroll-behavior:contain;min-height:0;flex:1;gap:12px;padding-bottom:12px}
   .sheet-close{display:inline-flex}
   .chips{display:none}
@@ -255,7 +259,7 @@ section.top{margin-top:8px}
   <div class="event">
     <div>
       <div class="tagline">가스안전 퀴즈 이벤트 <span class="prize">10명 추첨</span></div>
-      <h2 id="eventH">퀴즈 풀고 햄버거 받아 가세요!</h2>
+      <h2 id="eventH">퀴즈 풀고 <span class="burger" role="img" aria-label="햄버거">🍔</span><br>햄버거 받아 가세요!</h2>
       <p class="period"><span>참여 기간</span> 10월 13일(화) ~ 11월 12일(목)</p>
       <p>퀴즈에 참여한 사람 중 <b>10명을 추첨해 햄버거 기프티콘</b>을 드려요. 정답은 모두 아래 지도 안에 있어요.</p>
       <p class="seen" id="eventSeen">지금까지 1 / 6곳 봤어요.</p>
@@ -384,12 +388,14 @@ section.top{margin-top:8px}
     </div>
 
     <aside class="panel" id="panel" aria-labelledby="pTitle">
-      <div class="sheet-handle" aria-hidden="true"></div>
-      <div class="sheet-body" id="sheetBody">
+      <div class="sheet-head" id="sheetHead">
+        <div class="sheet-handle" aria-hidden="true"></div>
         <div class="sheet-top">
           <div class="progress"><span id="progText">1 / 6곳 봤어요</span><div class="bar"><i id="progBar"></i></div></div>
-          <button type="button" class="sheet-close" id="sheetClose" aria-label="설명 닫기">✕</button>
+          <button type="button" class="sheet-close" id="sheetClose" aria-label="설명 닫기"><span aria-hidden="true">✕</span> 닫기</button>
         </div>
+      </div>
+      <div class="sheet-body" id="sheetBody">
         <div class="chips" id="chips"></div>
         <h2 id="pTitle" tabindex="-1"></h2>
         <p class="one" id="pOne"></p>
@@ -622,6 +628,12 @@ $("shareLink").addEventListener("click",async()=>{
 $("prevRoom").addEventListener("click",()=>{ go($("prevRoom").dataset.id,false); $("sheetBody").scrollTop=0; });
 $("nextRoom").addEventListener("click",()=>{ go($("nextRoom").dataset.id,false); $("sheetBody").scrollTop=0; });
 $("sheetClose").addEventListener("click",closeSheet);
+// 손잡이 부분을 아래로 끌어내려도 닫힘
+(function(){
+  const head=$("sheetHead"); let y0=null;
+  head.addEventListener("touchstart",e=>{ y0=e.touches[0].clientY; },{passive:true});
+  head.addEventListener("touchend",e=>{ if(y0===null) return; const dy=e.changedTouches[0].clientY-y0; y0=null; if(dy>50) closeSheet(); },{passive:true});
+})();
 // 휴대폰에서 이유를 펼치면 펼친 내용이 보이게 살짝 스크롤
 $("pRules").addEventListener("toggle",e=>{
   const d=e.target; if(!isNarrow() || !d.open) return;
