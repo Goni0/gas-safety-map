@@ -59,6 +59,17 @@ header{padding-block:28px 8px;display:grid;gap:14px}
 .guide-count{flex:none;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums;color:var(--danger);background:var(--danger-soft);border-radius:999px;padding:4px 10px}
 .guide.done .guide-count{color:var(--safe);background:var(--safe-soft)}
 .hint .ok{color:var(--safe)}
+#tapHint{transition:transform .35s ease}
+.tap-hand{font-size:36px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.tap-glow{fill:var(--amber);opacity:.35}
+@media (prefers-reduced-motion:no-preference){
+  .tap-bob{animation:tapbob .9s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes tapbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .tap-glow{animation:tapglow 1.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes tapglow{0%{transform:scale(.6);opacity:.55}100%{transform:scale(1.6);opacity:0}}
+  .guide:not(.done) .guide-count{animation:countpulse 1.6s ease-in-out infinite}
+  @keyframes countpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+}
 .pin circle.ring{fill:none;stroke:var(--danger);stroke-width:3;opacity:0}
 .room.done .pin circle.ring{display:none}
 @media (prefers-reduced-motion:no-preference){.pin circle.ring{animation:ping 1.8s ease-out infinite;transform-box:fill-box;transform-origin:center}@keyframes ping{0%{transform:scale(1);opacity:.85}100%{transform:scale(2.3);opacity:0}}}
@@ -454,6 +465,10 @@ section.top{margin-top:8px}
           <text class="sub" x="604" y="355">이사·여행</text>
           <g class="pin" transform="translate(686,320)"><circle r="13"/><text y="6">!</text></g>
         </g>
+              <g id="tapHint" pointer-events="none" aria-hidden="true">
+          <circle class="tap-glow" r="26"/>
+          <g class="tap-bob"><text class="tap-hand" x="-4" y="46" text-anchor="middle">👆</text></g>
+        </g>
       </svg>
       </div>
       <p class="hint">본 곳은 <b class="ok">초록색</b>으로 바뀌어요.</p>
@@ -627,6 +642,7 @@ function render(){
     b.setAttribute("aria-pressed",String(picked && b.dataset.id===current));
     b.classList.toggle("done",seen.has(b.dataset.id));
   });
+  moveTapHint();
   const n=seen.size;
   const gd=$("guide"); gd.classList.toggle("done",n===6);
   $("guideCount").textContent=n+"/6";
@@ -881,6 +897,17 @@ $("shareImg").addEventListener("click",async()=>{
 });
 
 $("emptyFace").src=document.querySelector(".guide-face").src;
+// 아직 안 본 방 중 첫 번째 ! 위에 손가락을 띄워 클릭 유도
+const PIN_AT={kitchen:[344,320],outside:[100,300],bath:[316,166],boiler:[506,166],living:[574,320],door:[686,320]};
+function moveTapHint(){
+  const h=document.getElementById("tapHint"); if(!h) return;
+  const next=ORDER.find(id=>!seen.has(id));
+  if(!next){ h.setAttribute("display","none"); return; }
+  h.removeAttribute("display");
+  const [x,y]=PIN_AT[next], k=window.matchMedia("(max-width:660px)").matches?1.6:1;
+  h.setAttribute("transform","translate("+x+","+y+") scale("+k+")");
+}
+window.matchMedia("(max-width:660px)").addEventListener && window.matchMedia("(max-width:660px)").addEventListener("change",moveTapHint);
 // 아직 안 본 곳의 ! 표시 둘레에 퍼지는 원 넣기
 document.querySelectorAll(".pin").forEach(g=>{
   const ring=document.createElementNS("http://www.w3.org/2000/svg","circle");
