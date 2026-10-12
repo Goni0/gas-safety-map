@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="중·고등학생을 위한 우리집 가스안전 배치도와 퀴즈 이벤트">
-<style>[hidden]{display:none!important}img{max-width:100%}body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<style>[hidden]{display:none!important}
+html.sheet-lock,html.sheet-lock body{overflow:hidden;overscroll-behavior:none}img{max-width:100%}body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <script>window.GASMAP_STANDALONE=true;</script>
 <title>우리집 가스안전 배치도</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,6 +38,7 @@
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+html.sheet-lock,html.sheet-lock body{overflow:hidden;overscroll-behavior:none}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;letter-spacing:-.005em;padding-inline:16px;padding-block:0 48px;word-break:keep-all;overflow-wrap:anywhere}
 .wrap{max-width:1240px;margin:0 auto}
 h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;line-height:1.25;margin:0}
@@ -933,13 +935,22 @@ let lastRoomEl=null;
 function openSheet(){
   const pnl=$("panel"); const wasOpen=pnl.classList.contains("open");
   pnl.classList.add("open"); $("sheetBody").scrollTop=0;
-  // 지도가 설명 창에 가려지지 않게 지도를 화면 위쪽으로
-  const h=document.querySelector(".house").getBoundingClientRect();
-  if(h.top<0 || h.bottom>window.innerHeight*0.42) document.querySelector(".house").scrollIntoView({behavior:reduceMotion()?"auto":"smooth",block:"start"});
+  // 휴대폰: 배치도 그림을 화면 맨 위에 고정하고, 그 아래를 설명 창으로 채움
+  const wrap=document.querySelector(".svgwrap");
+  const y=window.scrollY + wrap.getBoundingClientRect().top - 6;
+  const avail=window.innerHeight - wrap.getBoundingClientRect().height - 18;
+  pnl.style.height=pnl.style.maxHeight=Math.max(avail, window.innerHeight*0.45)+"px";
+  if(!wasOpen){
+    document.documentElement.classList.remove("sheet-lock");
+    window.scrollTo({top:y, behavior:reduceMotion()?"auto":"smooth"});
+    clearTimeout(openSheet._t); openSheet._t=setTimeout(()=>document.documentElement.classList.add("sheet-lock"), reduceMotion()?0:380);
+  }
   if(!wasOpen) setTimeout(()=>{ try{ $("pTitle").focus({preventScroll:true}); }catch(e){} }, 60);
 }
 function closeSheet(){
   $("panel").classList.remove("open");
+  clearTimeout(openSheet._t); document.documentElement.classList.remove("sheet-lock");
+  $("panel").style.height=$("panel").style.maxHeight="";
   if(lastRoomEl){ try{ lastRoomEl.focus({preventScroll:true}); }catch(e){} }
 }
 function go(id,fromMap){
@@ -1017,7 +1028,7 @@ $("pRules").addEventListener("toggle",e=>{
 },true);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $("panel").classList.contains("open")) closeSheet(); });
 const wideMQ=window.matchMedia("(max-width:860px)");
-const onWide=()=>{ if(!isNarrow()) $("panel").classList.remove("open"); render(); };
+const onWide=()=>{ if(!isNarrow()){ $("panel").classList.remove("open"); document.documentElement.classList.remove("sheet-lock"); $("panel").style.height=$("panel").style.maxHeight=""; } render(); };
 if(wideMQ.addEventListener) wideMQ.addEventListener("change",onWide); else if(wideMQ.addListener) wideMQ.addListener(onWide);
 
 function setMode(m){
