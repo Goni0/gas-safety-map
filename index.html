@@ -1193,6 +1193,8 @@ document.querySelectorAll(".pin .pinbody").forEach(g=>{
 const narrowMQ=window.matchMedia("(max-width:660px)");
 function fitSvgToScreen(){
   const m=narrowMQ.matches;
+  // 휴대폰: 가스 선택 창이 방을 가리지 않게 집 위쪽 하늘을 더 넓게
+  $("svg").setAttribute("viewBox", m ? "0 -110 732 630" : "0 -40 732 560");
   document.querySelectorAll(".pin .pinbody").forEach(g=>{ if(m) g.setAttribute("transform","scale(1.23)"); else g.removeAttribute("transform"); });
   placeGasTag();
   $("gasTag").textContent=gasTagText();
