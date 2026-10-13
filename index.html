@@ -126,21 +126,23 @@ section.block>p.lead{color:var(--muted);max-width:60ch}
 .house{background:var(--sky);border:1px solid var(--line);border-radius:16px;padding:10px;min-width:0}
 .svgbox{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .svgwrap{position:relative}
-.tapcue{position:absolute;inset:0;z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:center;border-radius:12px;background:rgba(20,33,58,.32);transition:opacity .35s,visibility .35s}
+.tapcue{position:absolute;inset:0;z-index:3;pointer-events:none;display:flex;align-items:flex-end;padding-bottom:8px;justify-content:center;border-radius:12px;background:rgba(20,33,58,.32);transition:opacity .35s,visibility .35s}
 .tapcue.off{opacity:0;visibility:hidden}
-.tapcue-inner{position:relative;display:flex;align-items:center;gap:8px}
+.tapcue-inner{position:relative;display:flex;align-items:center;gap:6px;background:#fff;border-radius:999px;padding:9px 14px 9px 20px;box-shadow:0 6px 20px rgba(20,33,58,.35);overflow:hidden}
 .tapcue-handwrap{position:relative;order:2;display:grid;place-items:center}
-.tapcue-ring{position:absolute;left:50%;top:50%;margin:-30px 0 0 -30px;width:60px;height:60px;border-radius:50%;background:var(--kgs-blue);opacity:.3}
-.tapcue-hand{position:relative;order:2;font-size:44px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:drop-shadow(0 3px 4px rgba(20,33,58,.3))}
-.tapcue-text{display:block;position:relative;order:1;background:#fff;color:#14213A;font-weight:700;font-size:18px;border-radius:999px;padding:9px 20px;white-space:nowrap;box-shadow:0 6px 20px rgba(20,33,58,.35)}
+.tapcue-ring{display:none;position:absolute;left:50%;top:50%;margin:-20px 0 0 -20px;width:40px;height:40px;border-radius:50%;background:var(--kgs-blue);opacity:.3}
+.tapcue-hand{position:relative;order:2;font-size:26px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:drop-shadow(0 3px 4px rgba(20,33,58,.3))}
+.tapcue-text{display:block;position:relative;order:1;color:#14213A;font-weight:700;font-size:18px;white-space:nowrap}
 @media (prefers-reduced-motion:no-preference){
   .tapcue-hand{animation:tappress 1.3s ease-in-out infinite}
-  @keyframes tappress{0%,100%{transform:translateY(-8px)}45%{transform:translateY(4px) scale(.94)}60%{transform:translateY(0)}}
+  @keyframes tappress{0%,100%{transform:translateY(-2px)}45%{transform:translateY(2px) scale(.94)}60%{transform:translateY(0)}}
   .tapcue-ring{animation:tapring 1.3s ease-out infinite}
   @keyframes tapring{0%,40%{transform:scale(.4);opacity:0}50%{transform:scale(.6);opacity:.5}100%{transform:scale(1.7);opacity:0}}
 }
 .svgbox svg{width:100%;min-width:620px;height:auto;display:block}
 .hint{font-size:15px;color:var(--muted);padding:6px 6px 2px}
+.leaknote{display:flex;align-items:center;gap:8px;margin:0;padding:10px 6px 0;font-size:17px;font-weight:800;color:var(--ink)}
+.leaknote::before{content:"";flex:none;width:26px;height:12px;border-radius:50%;background:var(--gas);opacity:.7}
 .gasinfo{margin:0;display:flex;gap:6px;align-items:baseline;padding:6px 8px;background:var(--accent-soft);border-radius:8px;font-size:14px;line-height:1.45;color:var(--ink)}
 .gasinfo .gi{flex:none;font-weight:800;color:var(--flame)}
 .gasinfo .mbr{display:inline!important}
@@ -149,14 +151,20 @@ section.block>p.lead{color:var(--muted);max-width:60ch}
 @media (max-width:660px){
   .house{padding:6px}
   .svgbox svg{min-width:0}
-  .lbl{font-size:30px}
+  #svg .lbl{font-size:26px}
+  #svg #r-outside .lbl{transform:translate(-8px,8px)}
   .sub{display:none}
-  .gastag{font-size:18px}
-  .part{font-size:19px}
-  .gtag{font-size:18px}
-  .tapcue-text{font-size:16px;padding:7px 16px}
-  .tapcue-hand{font-size:38px}
-  .cyltag{font-size:13px}
+  #svg .gastag{font-size:24px}
+  #svg .gastag.tight{font-size:22px;letter-spacing:-.02em}
+  #svg .part{font-size:19px}
+  #svg .gtag{font-size:22px}
+  .tapcue{padding-bottom:4px}
+  .tapcue-inner{padding:7px 10px 7px 16px;gap:4px}
+  .tapcue-text{font-size:14px}
+  .tapcue-hand{font-size:19px}
+  .tapcue-ring{margin:-15px 0 0 -15px;width:30px;height:30px}
+  #svg .cyltag{font-size:16px}
+  #svg .exlbl{font-size:24px;transform:translate(2px,20px)}
   .keys{gap:8px;margin-top:16px}
   .key{padding:12px 16px}
   .key b{font-size:22px}
@@ -172,19 +180,21 @@ section.block>p.lead{color:var(--muted);max-width:60ch}
 .cyl{fill:var(--amber);stroke:var(--wall-line);stroke-width:1.5}
 .pipe{fill:none;stroke:var(--amber);stroke-width:4;stroke-linecap:round}
 .exh{fill:none;stroke:var(--wall-line);stroke-width:8;stroke-linecap:round}
+.awning{fill:#3B8FD0;stroke:#4A5568;stroke-width:1.5;stroke-linejoin:round}
+.awningedge{fill:none;stroke:#FFFFFF;stroke-width:1.5;opacity:.55;stroke-dasharray:6 5}
 .exhaust circle{fill:#A3AEBA;stroke:#7D8894;stroke-width:1.2;opacity:.7;transform-box:fill-box;transform-origin:center}
 .exhaust circle:nth-child(2){transform:translate(6px,-14px) scale(1.3);opacity:.4}
 .exhaust circle:nth-child(3){transform:translate(12px,-28px) scale(1.6);opacity:.25}
 .exhaust circle:nth-child(4){opacity:0}
-.exlbl{font-size:15px;font-weight:700;fill:var(--muted)}
+.exlbl{font-size:17px;font-weight:800;fill:var(--muted);paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round}
 @media (prefers-reduced-motion:no-preference){
   .exhaust circle{animation:exPuff 3.2s ease-out infinite}
   .exhaust circle:nth-child(2){animation-delay:-.8s}.exhaust circle:nth-child(3){animation-delay:-1.6s}.exhaust circle:nth-child(4){animation-delay:-2.4s}
   @keyframes exPuff{0%{transform:translate(0,0) scale(.5);opacity:0}12%{opacity:.9}100%{transform:translate(16px,-48px) scale(1.9);opacity:0}}
 }
 .fl{fill:var(--flame)}
-.lbl{font-family:var(--f-body);font-weight:700;font-size:18px;fill:var(--ink)}
-.sub{font-family:var(--f-body);font-size:13px;fill:var(--muted)}
+.lbl{font-family:var(--f-body);font-weight:700;font-size:21px;fill:var(--ink)}
+.sub{font-family:var(--f-body);font-size:14px;fill:var(--muted)}
 .room{cursor:pointer;outline:none}
 .room.inert{pointer-events:none;cursor:default}
 .room.inert .pin,.room.inert .hit{display:none}
@@ -196,11 +206,28 @@ section.block>p.lead{color:var(--muted);max-width:60ch}
 .pindot svg{width:100%;height:100%;display:block;fill:#FFFFFF}
 .room.done .pin circle{fill:var(--safe)}
 .gascloud ellipse{fill:var(--gas);opacity:.4}
+@media (max-width:660px){#callLead{font-size:min(16px,calc((100vw - 32px) * .0395))}}
+.leakpuffs circle{fill:var(--gas);opacity:0;transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){
+  .gascloud ellipse{animation:cloudBreath 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .gascloud ellipse:nth-child(2){animation-delay:-1.5s}
+  @keyframes cloudBreath{0%,100%{transform:scale(1,1);opacity:.35}50%{transform:scale(1.12,1.25);opacity:.55}}
+  .leakpuffs circle{animation:puffDown 3s ease-in infinite}
+  .leakpuffs circle:nth-child(2){animation-delay:-.75s;animation-name:puffDown2}
+  .leakpuffs circle:nth-child(3){animation-delay:-1.5s}
+  .leakpuffs circle:nth-child(4){animation-delay:-2.25s;animation-name:puffDown2}
+  @keyframes puffDown{0%{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.6}100%{transform:translate(-34px,26px) scale(1.8);opacity:0}}
+  @keyframes puffDown2{0%{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.6}100%{transform:translate(30px,24px) scale(1.7);opacity:0}}
+  .lng .leakpuffs circle{animation-name:puffUp}
+  .lng .leakpuffs circle:nth-child(2n){animation-name:puffUp2}
+  @keyframes puffUp{0%{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.6}100%{transform:translate(-30px,-50px) scale(1.8);opacity:0}}
+  @keyframes puffUp2{0%{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.6}100%{transform:translate(26px,-54px) scale(1.7);opacity:0}}
+}
 .gascloud{transition:transform .9s cubic-bezier(.4,.1,.2,1)}
 .lng .gascloud{transform:translateY(-78px)}
-.gastag{font-family:var(--f-body);font-weight:700;font-size:12px;fill:var(--ink)}
-.cyltag{font-family:var(--f-body);font-weight:700;font-size:10px;fill:#4A3300}
-.gtag{font-family:var(--f-body);font-weight:700;font-size:11px;fill:var(--ink)}
+.gastag{font-family:var(--f-body);font-weight:800;font-size:17px;fill:var(--ink)}
+.cyltag{font-family:var(--f-body);font-weight:800;font-size:14px;fill:#4A3300}
+.gtag{font-family:var(--f-body);font-weight:700;font-size:15px;fill:var(--ink)}
 .part{font-family:var(--f-body);font-weight:700;font-size:12px;fill:var(--danger)}
 @media (prefers-reduced-motion:no-preference){
   .drift{animation:drift 4s ease-in-out infinite alternate}
@@ -260,7 +287,7 @@ section.top{margin-top:8px}
 @media (max-width:819px){.prizeline .mbr{display:block}}
 .event .seen{font-size:15px;color:var(--muted);margin-top:6px}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#D2321A;color:#FFFFFF;font-family:var(--f-display);font-size:24px;box-shadow:0 6px 16px rgba(210,50,26,.3);text-decoration:none;padding:14px 26px;border-radius:14px;white-space:nowrap}
-.cta:hover{background:var(--flame);color:var(--on-accent)}
+.cta:hover,.cta:active,.fab:hover,.fab:active{background:#8B2A1C;color:#FFFFFF}
 .event .url{grid-column:1/-1;font-size:13px;color:var(--muted)}
 .ctas{display:grid;gap:8px;justify-items:stretch}
 .cta2{font:inherit;font-size:15px;font-weight:700;color:var(--ink);background:var(--surface);border:1.5px solid var(--ink);border-radius:12px;padding:10px 16px;cursor:pointer}
@@ -387,12 +414,96 @@ section.top{margin-top:8px}
 @media (max-width:660px){.rule .why .mbr,#pOne .mbr{display:inline}.rule .why{font-size:min(16px,calc((100vw - 60px) * .0374));letter-spacing:-.03em;line-height:1.75}.panel .one{font-size:min(15px,calc((100vw - 34px) * .0386));letter-spacing:-.03em}}
 @media (min-width:661px){.panel .one{font-size:15px}.rule .why,.panel .one{letter-spacing:-.03em}.rule{padding:12px}.panel{padding:18px}}
 .why-wrap .rule-art{justify-self:end;margin-top:-6px}
-.rule-art{flex:none;width:90px;height:auto;display:block;margin:0 -2px -2px 0}
+.rule-art{flex:none;width:90px;height:auto;display:block;margin:0 -2px -2px 0;overflow:visible}
 .rule-art .art-smoke{opacity:.4}
 .rule-art .art-smoke circle{fill:var(--muted)}
 .rule-art .art-core{fill:#FFFFFF;opacity:.75}
+.rule-art .art-okc2{fill:var(--safe)}
+.rule-art .art-okm2{fill:none;stroke:#FFFFFF;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 @media (prefers-reduced-motion:no-preference){
-.rule-art *{transform-box:fill-box}
+.rule-art .art-glever{animation:aLever2 4.2s ease-in-out infinite!important}
+.rule-art .art-knob{animation:aKnob3 4.2s ease-in-out infinite!important}
+.rule-art .art-turn,.rule-art .art-turnh{animation:aTurnShow 4.2s linear infinite!important}
+.rule-art .art-done{transform-origin:center;animation:aDone 4.2s ease-out infinite}
+@keyframes aLever2{0%,8%{transform:rotate(90deg)}26%,97%{transform:rotate(0)}97.01%,100%{transform:rotate(90deg)}}
+@keyframes aKnob3{0%,8%{transform:rotate(90deg)}26%,97%{transform:rotate(0)}97.01%,100%{transform:rotate(90deg)}}
+@keyframes aTurnShow{0%,4%{opacity:0}8%,24%{opacity:1}30%,100%{opacity:0}}
+@keyframes aDone{0%,28%{opacity:0;transform:scale(.3)}34%{opacity:1;transform:scale(1.2)}40%,94%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(1)}}
+}
+.rule-art .art-flapL,.rule-art .art-flapR{fill:#E7BC7E;stroke:#8A5A20;stroke-width:1.4;transform-box:view-box!important}
+.rule-art .art-flapL{transform-origin:44px 62px}
+.rule-art .art-flapR{transform-origin:82px 62px}
+.rule-art .art-tapeA{stroke:#C99A55;stroke-width:5;stroke-linecap:butt;opacity:.95}
+.rule-art .art-lid2{fill:#5BA7DD;stroke:var(--muted);stroke-width:1.5}
+.rule-art .art-lidg{transform-box:view-box!important;transform-origin:4px 60px}
+.rule-art .art-lockbody{fill:#F2A900;stroke:#8A5A20;stroke-width:1.3}
+.rule-art .art-lockring{fill:none;stroke:#4A5563;stroke-width:2;stroke-linecap:round}
+@media (prefers-reduced-motion:no-preference){
+.rule-art .art-packbox,.rule-art .art-packcase{animation:aPackIn 3.6s ease-in infinite}
+@keyframes aPackIn{0%{transform:translateY(-8px);opacity:0}6%{opacity:1}26%{transform:translateY(24px);opacity:1}32%,100%{transform:translateY(26px);opacity:0}}
+.rule-art .art-flapL{animation:aFlapL 3.6s ease-in-out infinite}
+.rule-art .art-flapR{animation:aFlapR 3.6s ease-in-out infinite}
+@keyframes aFlapL{0%,30%{transform:rotate(-125deg)}46%,94%{transform:rotate(0)}100%{transform:rotate(-125deg)}}
+@keyframes aFlapR{0%,38%{transform:rotate(125deg)}54%,94%{transform:rotate(0)}100%{transform:rotate(125deg)}}
+.rule-art .art-tapeA{animation:aTape 3.6s ease-out infinite}
+@keyframes aTape{0%,56%{opacity:0;transform:scaleY(.2)}66%,92%{opacity:.95;transform:scaleY(1)}96%,100%{opacity:0}}
+.rule-art .art-lidg{animation:aLid 3.6s ease-in-out infinite}
+@keyframes aLid{0%,32%{transform:rotate(-95deg)}50%,94%{transform:rotate(0)}100%{transform:rotate(-95deg)}}
+.rule-art .art-lock{transform-origin:center;animation:aLock 3.6s ease-out infinite}
+@keyframes aLock{0%,52%{opacity:0;transform:scale(.4)}62%{opacity:1;transform:scale(1.2)}70%,92%{opacity:1;transform:scale(1)}96%,100%{opacity:0}}
+}
+@media (prefers-reduced-motion:reduce){.rule-art .art-tapeA,.rule-art .art-lock{opacity:1}}
+.rule-art .art-d3s{fill:var(--danger);font:800 13px var(--f-body);text-anchor:middle}
+.rule-art .art-boxin{fill:#8A5A20;opacity:.55}
+.rule-art .art-flap{fill:#E7BC7E;stroke:#8A5A20;stroke-width:1.6;stroke-linejoin:round}
+.rule-art .art-item1{fill:#7FB3E0;stroke:var(--muted);stroke-width:1.5}
+.rule-art .art-item1l{stroke:#FFFFFF;stroke-width:1.6;stroke-linecap:round}
+.rule-art .art-lid{fill:#5BA7DD;stroke:var(--muted);stroke-width:1.5;stroke-linejoin:round}
+.rule-art .art-casehandle2{fill:none;stroke:var(--muted);stroke-width:2.6;stroke-linejoin:round}
+.rule-art .art-case2{fill:var(--kgs-blue);stroke:var(--muted);stroke-width:1.5}
+.rule-art .art-shirt{fill:#F2A900;stroke:#8A5A20;stroke-width:1.4}
+.rule-art .art-shirtl{fill:none;stroke:#8A5A20;stroke-width:1.4;stroke-linejoin:round}
+@media (prefers-reduced-motion:no-preference){
+.rule-art .art-pack{animation:aPack 2.4s ease-in infinite}
+@keyframes aPack{0%{transform:translateY(-6px);opacity:0}15%{opacity:1}65%{transform:translateY(24px);opacity:1}80%,100%{transform:translateY(26px);opacity:0}}
+.rule-art .art-flap{transform-origin:center;animation:aFlap 2.4s ease-in-out infinite}
+@keyframes aFlap{0%,60%{transform:rotate(0)}75%{transform:rotate(-8deg)}90%,100%{transform:rotate(0)}}
+}
+.rule-art .art-gpipe{fill:#F4F6F8;stroke:var(--muted);stroke-width:1.6}
+.rule-art .art-nut{fill:#C9CFD6;stroke:var(--muted);stroke-width:1.5}
+.rule-art .art-gvalve{fill:#5CC28F;stroke:#2F6B57;stroke-width:1.8}
+.rule-art .art-gvalveh{fill:none;stroke:#FFFFFF;stroke-width:2.5;stroke-linecap:round;opacity:.7}
+.rule-art .art-gleverb{fill:#1F7A50;stroke:#14513A;stroke-width:1.6}
+.rule-art .art-gknob{fill:#9FE0C2;stroke:#14513A;stroke-width:1.6}
+@keyframes aHot{0%,10%{fill:#F2A900}70%,100%{fill:#E4572E}}
+@keyframes aHotGlow{0%,10%{stroke:var(--muted);stroke-width:1.5}70%,100%{stroke:#D2321A;stroke-width:2.6}}
+.rule-art .art-hotcan{fill:#F2A900;stroke:var(--muted);stroke-width:1.5}
+.rule-art .art-hotglow{opacity:.8}
+@media (prefers-reduced-motion:no-preference){.rule-art .art-hotglow{transform-origin:center;animation:aGlow 3.2s ease-in infinite alternate}@keyframes aGlow{0%,10%{opacity:0;transform:scale(.6)}70%,100%{opacity:1;transform:scale(1.05)}}}
+@media (prefers-reduced-motion:reduce){.rule-art .art-hotcan{fill:#E4572E;stroke:#D2321A}}
+@media (prefers-reduced-motion:no-preference){
+.rule-art .art-glever{transform-box:view-box!important;transform-origin:58px 50px;animation:aLever 2.8s ease-in-out infinite}
+@keyframes aLever{0%,15%{transform:rotate(90deg)}45%,85%{transform:rotate(0)}100%{transform:rotate(90deg)}}
+.rule-art .art-brushg{animation:aScrub 1.2s ease-in-out infinite}
+@keyframes aScrub{0%,100%{transform:translate(0,0)}50%{transform:translate(2px,-3px)}}
+.rule-art .art-hotcan{animation:aHot 3.2s ease-in infinite alternate,aHotGlow 3.2s ease-in infinite alternate,aShake .5s ease-in-out infinite}
+}
+.rule-art .art-flame-r{fill:#E4572E}
+.rule-art .art-core-r{fill:#FFD34D;opacity:.9}
+.rule-art .art-sight{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:3 3;stroke-linecap:round}
+.rule-art .art-spark{fill:none;stroke:#F2A900;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rule-art .art-knob2{stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
+.rule-art .art-turn2,.rule-art .art-turnh2{fill:none;stroke:var(--flame);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+@media (prefers-reduced-motion:no-preference){
+.rule-art .art-flame-r{transform-origin:50% 100%;animation:aFlick .6s ease-in-out infinite}
+.rule-art .art-sight{animation:aDash 1.2s linear infinite}
+.rule-art .art-spark{animation:aBlink .5s steps(2,end) infinite}
+.rule-art .art-knob2{transform-box:view-box;transform-origin:22px 80.5px;animation:aKnob2 2.6s ease-in-out infinite}
+@keyframes aKnob2{0%,15%{transform:rotate(0)}40%,85%{transform:rotate(-70deg)}100%{transform:rotate(0)}}
+}
+@media (prefers-reduced-motion:no-preference){
+.rule-art *:not([transform]){transform-box:fill-box}
+.rule-art .art-knob,.rule-art .art-knob2{transform-box:view-box!important}
 .rule-art .art-flame,.rule-art .art-flame-y{transform-origin:50% 100%;animation:aFlick 1.1s ease-in-out infinite}
 .rule-art .art-flame-y{animation-duration:.7s}
 .rule-art .art-core{transform-origin:50% 100%;animation:aFlick 1.1s ease-in-out infinite reverse}
@@ -416,13 +527,13 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
 .rule-art .art-wave{animation:aBlink 1s steps(2,end) infinite}
 .rule-art .art-alarmled{animation:aBlink .8s steps(2,end) infinite}
 .rule-art .art-mini2{animation:aBlink 1s steps(2,end) infinite}
-.rule-art .art-knob{transform-box:view-box;transform-origin:18px 80px;animation:aKnob 2.6s ease-in-out infinite}
-.rule-art .art-turn,.rule-art .art-turnh{animation:aBlink 2.6s ease-in-out infinite}
+.rule-art .art-knob{transform-box:view-box;transform-origin:18px 80px;animation:aKnob 2.8s ease-in-out infinite}
+.rule-art .art-turn,.rule-art .art-turnh{animation:aBlink 2.8s ease-in-out infinite}
 .rule-art .art-burst{transform-origin:center;animation:aPulse 1s ease-in-out infinite}
 .rule-art .art-x,.rule-art .art-ban,.rule-art .art-ngc,.rule-art .art-ngm,.rule-art .art-slash{animation:aFade 1.6s ease-in-out infinite}
 .rule-art .art-okc,.rule-art .art-okm{transform-origin:center;animation:aPop 2.4s ease-in-out infinite}
 .rule-art .art-d3{transform-origin:center;animation:aPulse 1.6s ease-in-out infinite}
-.rule-art .art-box,.rule-art .art-boxtape{animation:aBob 2s ease-in-out infinite}
+
 .rule-art .art-band{animation:aSlip 2.4s ease-in-out infinite}
 .rule-art .art-can{animation:aShake 1.2s ease-in-out infinite}
 .rule-art .art-eyec{transform-origin:center;animation:aLook 3s ease-in-out infinite}
@@ -434,7 +545,7 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
 @keyframes aDash{to{stroke-dashoffset:-16}}
 @keyframes aDown{0%,100%{transform:translateY(-3px);opacity:.6}50%{transform:translateY(4px);opacity:1}}
 @keyframes aUp{0%,100%{transform:translateY(3px);opacity:.6}50%{transform:translateY(-4px);opacity:1}}
-@keyframes aWind{0%,100%{transform:translateX(0);opacity:.4}50%{transform:translateX(4px);opacity:1}}
+@keyframes aWind{0%,100%{transform:translateX(-4px);opacity:.4}50%{transform:translateX(0);opacity:1}}
 @keyframes aRise{0%,100%{transform:translateY(2px);opacity:.35}50%{transform:translateY(-3px);opacity:1}}
 @keyframes aBub{0%,100%{transform:translateY(0) scale(.85);opacity:.5}50%{transform:translateY(-4px) scale(1.1);opacity:1}}
 @keyframes aDrip{0%{transform:translateY(-4px);opacity:0}25%{opacity:1}80%{transform:translateY(5px);opacity:1}100%{transform:translateY(6px);opacity:0}}
@@ -614,8 +725,8 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
         </div>
       </div>
       <div class="svgbox">
-      <svg id="svg" viewBox="0 -40 732 560" role="img" aria-label="집 단면 그림. 부엌, 집 밖, 욕실, 다용도실, 거실, 현관을 누를 수 있어요.">
-        <rect class="ground" x="0" y="470" width="820" height="50"/>
+      <svg id="svg" viewBox="0 -40 732 622" role="img" aria-label="집 단면 그림. 부엌, 집 밖, 욕실, 다용도실, 거실, 현관을 누를 수 있어요.">
+        <rect class="ground" x="0" y="470" width="820" height="180"/>
         <polygon class="roof" points="100,152 410,48 720,152"/>
         <rect class="wall" x="120" y="150" width="580" height="320"/>
         <line class="floorline" x1="120" y1="305" x2="700" y2="305"/>
@@ -627,6 +738,9 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
         <g class="room" id="r-outside" data-id="outside" tabindex="0" role="button" aria-label="집 밖">
           <rect class="hit" x="8" y="300" width="108" height="168" rx="10"/>
           <g class="lpgOnly">
+            <path d="M15 352 V470" stroke="#7B8794" stroke-width="3" stroke-linecap="round" aria-hidden="true"/>
+            <path class="awning" d="M118 332 L8 348 L8 355 L118 339 Z" aria-hidden="true"/>
+            <path class="awningedge" d="M8 355 L118 339" aria-hidden="true"/>
             <rect class="cyl" x="22" y="380" width="34" height="88" rx="12"/>
             <rect class="cyl" x="64" y="380" width="34" height="88" rx="12"/>
             <text class="cyltag" x="39" y="430" text-anchor="middle">LPG</text>
@@ -636,7 +750,7 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
             <path class="pipe" d="M39 370 V356 H81 V370 M60 356 V340 H120"/>
             <rect x="51" y="340" width="18" height="12" rx="3" fill="#B8C1CB" stroke="#4A5568" stroke-width="1.3"/>
             <circle cx="60" cy="346" r="3.2" fill="#F4F5F7" stroke="#4A5568" stroke-width="1"/>
-            <g aria-hidden="true">
+            <g aria-hidden="true" transform="translate(4,512) scale(1.5) translate(-4,-512)">
               <rect x="4" y="482" width="46" height="22" rx="2" fill="var(--surface-2)" stroke="var(--wall-line)" stroke-width="1.5"/>
               <rect x="9" y="486" width="9" height="15" rx="3" fill="var(--amber)"/>
               <rect x="21" y="486" width="9" height="15" rx="3" fill="var(--amber)"/>
@@ -654,7 +768,6 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
             <rect class="obj" x="34" y="380" width="52" height="44" rx="5"/>
             <rect class="obj2" x="44" y="390" width="32" height="12" rx="2"/>
             <path class="pipe" d="M60 380 V340 H120"/>
-            <text class="gtag" x="4" y="513">땅속 도시가스 배관</text>
           </g>
           <path class="pipe" d="M112 340 H116 V298 H120" aria-hidden="true"/>
           <text class="lbl" x="62" y="326" text-anchor="middle">집 밖</text>
@@ -747,13 +860,14 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
             <circle cx="244" cy="426" r="7" fill="var(--surface)" stroke="var(--wall-line)" stroke-width="2"/>
             <line x1="244" y1="426" x2="244" y2="420" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
           </g>
+          <g class="leakpuffs" aria-hidden="true"><circle cx="228" cy="430" r="7"/><circle cx="228" cy="430" r="7"/><circle cx="228" cy="430" r="7"/><circle cx="228" cy="430" r="7"/></g>
           <g class="gascloud" aria-hidden="true">
             <g class="drift">
               <ellipse cx="190" cy="458" rx="54" ry="10"/>
               <ellipse cx="255" cy="452" rx="44" ry="9"/>
             </g>
-            <text class="gastag" x="214" y="444" id="gasTag">새는 가스 ↓ 바닥에</text>
           </g>
+          <text class="gastag" x="240" y="458" text-anchor="middle" id="gasTag">LPG 누출 시 바닥에 ↓</text>
           <text class="lbl" x="136" y="336">부엌</text>
           <text class="sub" x="136" y="362">가스레인지</text>
           <g class="pin" transform="translate(344,320)"><g class="pinbody"><circle r="13"/><path class="bang" d="M-1.8,-6a1.8,1.8 0 0 1 3.6,0V1.8a1.8,1.8 0 0 1 -3.6,0Z M0,4.3a2,2 0 1 1 0,4a2,2 0 1 1 0,-4Z"/></g></g>
@@ -821,7 +935,7 @@ svg[aria-label^="도시가스가"] .art-arrow,svg[aria-label^="도시가스가"]
 
 <section class="block" aria-labelledby="callH">
   <h2 id="callH">가스안전 연락망</h2>
-  <p class="lead">119와 한국가스안전공사 번호는 이미 들어가 있어요. 우리집 가스 공급자 번호만 적으면,<span class="mbr"> </span>세 번호가 한 장의 이미지로 만들어져요. 휴대폰에 저장하거나 가족에게 공유해 주세요.</p>
+  <p class="lead" id="callLead">우리집 가스 공급자 번호만 적으면,<br>세 번호가 적힌 가스안전 연락망이 만들어져요. 휴대폰에 이미지로 저장하거나 가족에게 공유해 주세요.</p>
   <div class="maker">
     <div class="card">
       <div class="fixed"><div class="k">불이 나거나 가스가 샐 때</div><div class="v red">119</div></div>
@@ -880,7 +994,7 @@ const ROOMS = {
   kitchen:{name:"부엌", title:"가스레인지 안전 사용", one:"사용 전에는 가스 냄새를,<span class='mbr'> </span>점화 후에는 불꽃을 확인하고,<br>사용 후에는<span class='mbr'> </span>점화 스위치와 중간밸브를 잠가요.",
     rules:[
       {t:"do", h:"사용 전: 가스 냄새 확인하기", art:"gasSmell", why:"가스가 누출된 상태에서 점화하면<span class='mbr'> </span>폭발할 수 있어요. 가스 냄새가 나면 창문을 열어 환기하세요."},
-      {t:"do", h:"점화 후: 점화 여부 확인하기", art:"flameCheck", why:"점화 스위치를 돌린 후<span class='mbr'> </span>불이 붙었는지 확인해요. 파란 불꽃이 정상이에요. 노란 불꽃은 불완전연소 상태로,<span class='mbr'> </span>일산화탄소(CO)가 발생해요."},
+      {t:"do", h:"점화 후: 점화 여부 확인하기", art:"igniteCheck", why:"점화 스위치를 돌린 후<span class='mbr'> </span>불이 붙었는지 확인해요. 파란 불꽃이 정상이에요. 노란 불꽃은 불완전연소 상태로,<span class='mbr'> </span>일산화탄소(CO)가 발생해요."},
       {t:"do", h:"사용 후: 점화 스위치와 중간밸브 잠그기", art:"valveOff", why:"가스를 사용한 뒤에는<br>점화 스위치와 중간밸브를 잠가요."},
       {t:"do", h:"매월 4일: 비눗물로 셀프 점검하기", art:"soapCheck", why:"호스와 밸브 이음매에<span class='mbr'> </span>비눗물을 바른 후 거품이 생기면<br>가스가 누출되고 있다는 뜻이에요. 가스 사용을 중지하고<span class='mbr'> </span>점화 스위치와 중간밸브를 잠근 뒤,<br>환기하고 가스 공급자에게 연락해야 해요."},
       {t:"know", lpg:"LPG는 바닥에 가라앉아요", lng:"도시가스는 위로 올라가요", art_lpg:"gasSink", art_lng:"gasRise",
@@ -899,7 +1013,7 @@ const ROOMS = {
       {t:"know", h:"일산화탄소는 냄새도 색도 없어요", art:"coInvisible", why:"일산화탄소가 누출되면<br>두통, 어지럼증, 졸림 증상이 나타날 수 있어요. 심하면 사망에 이를 수 있어요.<span style=\"margin-left:6px\">💀</span>"},
       {t:"tip", h:"캠핑할 때도 CO 중독 주의!", art:"campTent", why:"텐트나 차량처럼 밀폐된 공간에서<span class='mbr'> </span>가스를 사용하면<br>일산화탄소(CO)에 중독될 수 있어요."}
     ]},
-  boiler:{name:"다용도실", title:"보일러 배기통 확인하기", one:"보일러 폐가스는<span class='mbr'> </span>배기통을 통해 밖으로 배출돼요. 배기통 이음부가 이탈되면<span class='mbr'> </span>배기가스가 집 안으로 들어와요.",
+  boiler:{name:"다용도실", title:"보일러 배기통 확인하기", one:"보일러 폐(배기)가스는<span class='mbr'> </span>배기통을 통해 밖으로 배출돼요. 배기통 이음부가 이탈되면<span class='mbr'> </span>폐가스가 집 안으로 들어와요.",
     rules:[
       {t:"do", h:"배기통 이음부 누출 여부 확인하기", art:"flueJoint", artSide:true, why:"배기통 이음부에서<br>일산화탄소가 누출될 수 있어요. 이상이 발견되면 보일러 제조사나<br>가스 공급자에게 점검을 요청해요."},
       {t:"do", h:"일산화탄소 경보기 설치하기", art:"coAlarm", why:"경보기를 설치하면<br>일산화탄소 누출을 신속하게 감지할 수 있어요."}
@@ -916,7 +1030,7 @@ const ROOMS = {
       {t:"do", h:"장기 외출 시 잠금 확인하기", art:"awayValve", why:"집을 오래 비울 때는<br>점화 스위치와 중간밸브가<span class='mbr'> </span>잠겼는지 확인해요."}
     ]}
 };
-const ART={flameCheck:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="파란 불꽃은 정상, 노란 불꽃은 불완전연소를 나타낸 그림"><g transform="translate(-43,-37.6) scale(1.6)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><g transform="translate(-7,-37.6) scale(1.6)"><path class="art-flame-y" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><circle class="art-okc" cx="24" cy="14" r="8"/><path class="art-okm" d="M20 14 l3 3 l5 -6"/><circle class="art-ngc" cx="60" cy="14" r="8"/><path class="art-ngm" d="M56.5 10.5 l7 7 M63.5 10.5 l-7 7"/><rect class="art-duct" x="4" y="64" width="76" height="8" rx="3"/><rect class="art-body" x="8" y="72" width="68" height="20" rx="4"/><circle class="art-win" cx="26" cy="82" r="4.5"/><circle class="art-win" cx="58" cy="82" r="4.5"/></svg>',valveOff:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="점화 스위치와 중간밸브를 잠그는 그림"><rect class="art-duct" x="44" y="2" width="12" height="92" rx="3"/><rect class="art-body" x="40" y="38" width="20" height="24" rx="4"/><rect class="art-lever" x="10" y="45" width="34" height="10" rx="5"/><path class="art-turn" d="M30 28 a18 18 0 0 0 -18 14"/><path class="art-turnh" d="M8 37 l4 6 l5 -5"/><circle class="art-win" cx="18" cy="80" r="11"/><path class="art-knob" d="M18 80 L8 80"/><text class="art-mini" x="36" y="94">OFF</text></svg>',soapCheck:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="호스 이음매에 비눗물을 발라 거품을 확인하는 그림"><path class="art-hose2" d="M2 70 H40"/><rect class="art-joint2" x="38" y="63" width="12" height="14" rx="2"/><path class="art-hose2" d="M50 70 H82"/><circle class="art-bub" cx="44" cy="56" r="5"/><circle class="art-bub" cx="52" cy="50" r="3.5"/><circle class="art-bub" cx="38" cy="49" r="3"/><circle class="art-bub" cx="47" cy="43" r="2.5"/><rect class="art-brush" x="58" y="18" width="7" height="26" rx="2" transform="rotate(35 61 31)"/><rect class="art-bristle" x="52" y="40" width="11" height="9" rx="2" transform="rotate(35 57 44)"/><text class="art-mini" x="20" y="92">매월 4일</text></svg>',gasSink:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="LPG가 바닥에 가라앉아 출입문을 열어 환기하는 그림"><rect class="art-room" x="4" y="8" width="76" height="80" rx="3"/><rect class="art-door" x="56" y="40" width="18" height="48"/><path class="art-gascloud" d="M8 86 q6 -9 14 -4 q6 -8 14 -2 q7 -7 14 0 q4 -3 6 1 V88 H8z"/><path class="art-arrow" d="M28 26 V58"/><path class="art-arrowh" d="M21 51 l7 8 l7 -8"/><path class="art-wind" d="M76 74 h6 M76 80 h8"/></svg>',gasRise:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="도시가스가 위로 올라가 위쪽 창문을 열어 환기하는 그림"><rect class="art-room" x="4" y="8" width="76" height="80" rx="3"/><rect class="art-window" x="52" y="14" width="22" height="18" rx="1"/><path class="art-gascloud" d="M8 12 H48 V20 q-6 6 -12 2 q-6 6 -13 1 q-6 5 -15 0z"/><path class="art-arrow" d="M28 76 V40"/><path class="art-arrowh" d="M21 47 l7 -8 l7 8"/><path class="art-wind" d="M76 20 h6 M76 26 h8"/></svg>',odorant:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="가스에 냄새 나는 물질인 부취제를 넣는 그림"><rect class="art-bottle" x="4" y="10" width="34" height="30" rx="6"/><rect class="art-vent" x="15" y="4" width="12" height="7" rx="2"/><text class="art-mini" x="21" y="29">부취제</text><path class="art-drop" d="M21 46 c3 4 5 6 5 9 a5 5 0 0 1 -10 0 c0 -3 2 -5 5 -9z"/><rect class="art-duct" x="2" y="66" width="80" height="12" rx="3"/><path class="art-odor" d="M50 60 q-4 -5 0 -10 t0 -10"/><path class="art-odor" d="M62 60 q-4 -5 0 -10 t0 -10"/><text class="art-emoji" x="72" y="34">👃</text></svg>',sunShade:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="차양막과 빗물 보호대로 LPG 용기를 햇빛과 비로부터 보호하는 그림"><circle class="art-sun" cx="14" cy="14" r="8"/><path class="art-sunray" d="M14 0 v3 M14 25 v3 M0 14 h3 M25 14 h3 M4 4 l2 2 M22 22 l2 2 M24 4 l-2 2 M4 24 l2 -2"/><path class="art-awning" d="M30 30 L82 22 L82 30 L30 38z"/><path class="art-pipe" d="M36 37 V90 M78 29 V90"/><path class="art-rain" d="M44 6 l-2 6 M56 4 l-2 6 M68 6 l-2 6"/><rect class="art-cyl" x="44" y="48" width="14" height="40" rx="6"/><rect class="art-cyl" x="62" y="48" width="14" height="40" rx="6"/></svg>',coInvisible:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="냄새도 색도 없는 일산화탄소 그림"><path class="art-cocloud" d="M14 52 q-10 0 -10 -10 q0 -10 10 -10 q2 -12 16 -12 q10 0 14 8 q12 -2 14 10 q10 2 10 12 q0 8 -10 8 z" stroke-dasharray="4 4"/><text class="art-cotext2" x="38" y="47">CO</text><path class="art-eye" d="M14 78 q14 -12 28 0 q-14 12 -28 0z"/><circle class="art-eyec" cx="28" cy="78" r="3"/><path class="art-slash" d="M14 88 L42 68"/><text class="art-emoji" x="64" y="88">👃</text><path class="art-slash" d="M54 92 L74 70"/></svg>',campTent:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="밀폐된 텐트 안에서 가스를 쓰면 일산화탄소가 차는 그림"><path class="art-tent" d="M42 8 L80 86 H4z"/><path class="art-tentdoor" d="M42 8 L32 86 M42 8 L52 86"/><path class="art-gascloud2" d="M22 52 q4 -8 12 -4 q6 -6 14 0 q8 -2 10 6 q-6 6 -14 2 q-8 6 -16 0 q-6 2 -6 -4z"/><text class="art-cotext3" x="42" y="57">CO</text><rect class="art-body" x="32" y="72" width="20" height="10" rx="2"/><g transform="translate(0,18) scale(1) scale(1)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g></svg>',coAlarm:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="천장에 단 일산화탄소 경보기가 울리는 그림"><rect class="art-ceil" x="2" y="2" width="80" height="8"/><path class="art-pipe" d="M42 10 V16"/><circle class="art-alarm" cx="42" cy="34" r="18"/><circle class="art-alarmled" cx="42" cy="28" r="4"/><text class="art-mini" x="42" y="44">CO</text><path class="art-wave" d="M18 26 q-6 8 0 16 M12 22 q-9 12 0 24 M66 26 q6 8 0 16 M72 22 q9 12 0 24"/><text class="art-mini2" x="42" y="74">삐-삐-</text></svg>',bigPlate:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="부탄캔을 덮는 큰 불판을 쓰면 부탄캔이 가열되는 그림"><path class="art-x" d="M33 2 L51 20 M51 2 L33 20"/><g transform="translate(0.6,13.5) scale(0.7)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><rect class="art-plate" x="2" y="42" width="80" height="7" rx="3"/><path class="art-heat" d="M66 56 q-3 -4 -6 0 t-6 0"/><path class="art-heat" d="M66 62 q-3 -4 -6 0"/><rect class="art-body" x="6" y="58" width="74" height="26" rx="4"/><rect class="art-can" x="62" y="62" width="12" height="18" rx="2.5"/></svg>',foilGrill:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="알루미늄 호일로 감싼 석쇠를 불판처럼 쓰면 부탄캔이 폭발할 수 있는 그림"><path class="art-burst" d="M70 6 l3 8 l8 -3 l-5 7 l7 5 l-9 1 l1 9 l-6 -7 l-6 6 l1 -9 l-8 -2 l7 -5 l-4 -8 l8 4z"/><g transform="translate(0.6,13.5) scale(0.7)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><rect class="art-foil" x="2" y="40" width="80" height="9" rx="2"/><path class="art-foilline" d="M8 44 h10 M24 45 h12 M42 44 h8 M56 45 h12"/><path class="art-heat" d="M70 56 q-3 -4 -6 0 t-6 0"/><rect class="art-body" x="6" y="58" width="74" height="26" rx="4"/><rect class="art-can" x="62" y="62" width="12" height="18" rx="2.5"/></svg>',awayValve:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="집을 오래 비울 때 중간밸브가 잠겼는지 확인하는 그림"><rect class="art-case" x="4" y="40" width="40" height="44" rx="5"/><path class="art-casehandle" d="M16 40 v-8 h16 v8"/><path class="art-casebelt" d="M4 58 H44"/><rect class="art-duct" x="58" y="4" width="12" height="88" rx="3"/><rect class="art-body" x="54" y="38" width="20" height="22" rx="4"/><rect class="art-lever" x="40" y="44" width="16" height="9" rx="4.5" transform="rotate(0)"/><circle class="art-okc" cx="70" cy="74" r="8"/><path class="art-okm" d="M66 74 l3 3 l5 -6"/></svg>',gasSmell:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="가스레인지 주변에서 가스 냄새를 확인하는 그림"><path class="art-odor" d="M14 50 q-5 -6 0 -12 t0 -12 t0 -12"/><path class="art-odor" d="M28 50 q-5 -6 0 -12 t0 -12 t0 -12"/><path class="art-odor" d="M42 50 q-5 -6 0 -12 t0 -12"/><text class="art-emoji" x="66" y="34">👃</text><rect class="art-duct" x="2" y="54" width="62" height="8" rx="3"/><rect class="art-vent" x="12" y="50" width="12" height="4" rx="2"/><rect class="art-vent" x="40" y="50" width="12" height="4" rx="2"/><rect class="art-body" x="4" y="62" width="58" height="30" rx="4"/><circle class="art-win" cx="20" cy="77" r="5.5"/><circle class="art-win" cx="46" cy="77" r="5.5"/></svg>',twoBurners:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="휴대용 버너 두 대를 붙여 쓰면 옆 버너 열이 부탄캔을 가열하는 그림"><path class="art-x" d="M30 6 L48 24 M48 6 L30 24"/><g transform="translate(-26,-4)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><g transform="translate(16,-4)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><path class="art-heat" d="M50 50 q-3 -4 -6 0 t-6 0"/><path class="art-heat" d="M50 42 q-3 -4 -6 0 t-6 0"/><rect class="art-body" x="1" y="60" width="40" height="24" rx="4"/><rect class="art-body" x="43" y="60" width="40" height="24" rx="4"/><rect class="art-can" x="29" y="63" width="9" height="18" rx="2.5"/><rect class="art-can" x="71" y="63" width="9" height="18" rx="2.5"/></svg>',moveD3:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="이사 3일 전을 표시한 달력과 이삿짐 상자 그림"><rect class="art-body" x="6" y="16" width="50" height="54" rx="5"/><path class="art-calhead" d="M6 21 a5 5 0 0 1 5 -5 h40 a5 5 0 0 1 5 5 v8 h-50 z"/><path class="art-pipe" d="M18 10 v10 M44 10 v10"/><text class="art-d3" x="31" y="56">D-3</text><rect class="art-box" x="46" y="60" width="34" height="30" rx="2"/><path class="art-boxtape" d="M46 69 H80 M63 60 V69"/></svg>',lpgSwap:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="LPG 용기 밸브를 공구로 직접 돌리지 말라는 금지 그림"><path class="art-hose" d="M30 22 H18 Q10 22 10 30 V40"/><rect class="art-cyl" x="16" y="34" width="38" height="58" rx="13"/><text class="art-cyltext" x="35" y="68">LPG</text><rect class="art-valve" x="28" y="18" width="14" height="17" rx="3"/><path class="art-wrench-h" d="M55 18 L68 31"/><path class="art-wrench" d="M56.5 12.5 a5.5 5.5 0 1 0 -4 9.5 l1 -3.5 l3.5 -1 z"/><circle class="art-ban" cx="60" cy="23" r="17"/><path class="art-ban" d="M48 35 L72 11"/></svg>',flueJoint:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="보일러 배기통 이음부가 벌어져 배기가스가 새어 나오는 그림"><rect class="art-duct" x="26" y="2" width="14" height="22" rx="2" transform="rotate(7 33 24)"/><rect class="art-duct" x="23" y="30" width="14" height="24" rx="2"/><rect class="art-band" x="21" y="29" width="18" height="5" rx="1.5"/><g class="art-smoke"><circle cx="44" cy="25" r="5"/><circle cx="52" cy="20" r="6.5"/><circle cx="54" cy="29" r="5"/><circle cx="62" cy="23" r="5"/><circle cx="14" cy="24" r="4"/></g><rect class="art-co" x="52" y="35" width="28" height="15" rx="7.5"/><text class="art-cotext" x="66" y="46.2">CO</text><rect class="art-body" x="10" y="54" width="40" height="38" rx="5"/><rect class="art-vent" x="18" y="60" width="24" height="3" rx="1.5"/><circle class="art-win" cx="30" cy="77" r="7"/></svg>',openHeater:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="배기통 없이 실내로 배기가스를 내보내는 개방형 온수기 그림"><g class="art-smoke"><circle cx="32" cy="27" r="8"/><circle cx="43" cy="21" r="9"/><circle cx="55" cy="26" r="7.5"/><circle cx="37" cy="12" r="6.5"/><circle cx="48" cy="9" r="5.5"/></g><rect class="art-co" x="54" y="2" width="28" height="15" rx="7.5"/><text class="art-cotext" x="68" y="13.2">CO</text><rect class="art-body" x="22" y="34" width="40" height="44" rx="6"/><rect class="art-vent" x="30" y="38" width="24" height="3" rx="1.5"/><rect class="art-win" x="32" y="47" width="20" height="16" rx="3"/><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/><path class="art-pipe" d="M42 78v6h14"/><path class="art-pipe" d="M56 84v4"/><path class="art-water" d="M56 91.5c1.2 1.5 1.8 2.4 1.8 3.1a1.8 1.8 0 0 1-3.6 0c0-.7.6-1.6 1.8-3.1z"/></svg>'};
+const ART={igniteCheck:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="점화 스위치를 돌린 뒤 불이 붙었는지 눈으로 확인하고, 파란 불꽃은 정상, 붉은 불꽃은 불완전연소임을 나타낸 그림"><path class="art-eye" d="M2 16 q12 -11 24 0 q-12 11 -24 0z"/><circle class="art-eyec" cx="14" cy="16" r="3.2"/><path class="art-sight" d="M22 24 L33 38"/><g transform="translate(-31.6,-52.3) scale(1.8)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><path class="art-spark" d="M27 52 l3 3 l-1 -5 l4 2"/><g transform="translate(27.3,-34.0) scale(0.85)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><g transform="translate(41.3,-34.0) scale(0.85)"><path class="art-flame-r" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core-r" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><circle class="art-okc" cx="63" cy="28" r="4.6"/><path class="art-okm" d="M60.8 28 l1.6 1.7 l3 -3.3"/><circle class="art-ngc" cx="77" cy="28" r="4.6"/><path class="art-ngm" d="M75 26 l4 4 M79 26 l-4 4"/><rect class="art-duct" x="8" y="62" width="70" height="7" rx="3"/><rect class="art-body" x="6" y="69" width="74" height="23" rx="4"/><circle class="art-win" cx="22" cy="80.5" r="6.5"/><path class="art-knob2" d="M22 80.5 L22 74.5"/><path class="art-turn2" d="M12 72 a12 12 0 0 1 12 -4"/><path class="art-turnh2" d="M21 65 l4 3 l-3.5 3.5"/><circle class="art-win" cx="62" cy="80.5" r="6.5"/></svg>',flameCheck:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="파란 불꽃은 정상, 노란 불꽃은 불완전연소를 나타낸 그림"><g transform="translate(-36,-37.6) scale(1.6)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><g transform="translate(-7,-37.6) scale(1.6)"><path class="art-flame-y" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><circle class="art-okc" cx="24" cy="14" r="8"/><path class="art-okm" d="M20 14 l3 3 l5 -6"/><circle class="art-ngc" cx="60" cy="14" r="8"/><path class="art-ngm" d="M56.5 10.5 l7 7 M63.5 10.5 l-7 7"/><rect class="art-duct" x="4" y="64" width="76" height="8" rx="3"/><rect class="art-body" x="8" y="72" width="68" height="20" rx="4"/><circle class="art-win" cx="26" cy="82" r="4.5"/><circle class="art-win" cx="58" cy="82" r="4.5"/></svg>',valveOff:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="점화 스위치를 OFF로 돌리고 초록색 중간밸브 손잡이를 배관과 직각(가로)이 되게 돌려 잠근 뒤 확인 표시가 나타나는 그림"><rect class="art-gpipe" x="51" y="0" width="14" height="96" rx="2"/><rect class="art-nut" x="47" y="26" width="22" height="8" rx="2"/><rect class="art-nut" x="47" y="66" width="22" height="8" rx="2"/><rect class="art-gvalve" x="42" y="34" width="32" height="32" rx="8"/><path class="art-gvalveh" d="M46 40 h8"/><g class="art-glever"><rect class="art-gleverb" x="31" y="45" width="54" height="10" rx="5"/></g><circle class="art-gknob" cx="58" cy="50" r="6.5"/><path class="art-turn" d="M34 26 a20 20 0 0 0 -16 16"/><path class="art-turnh" d="M14 37 l4 6 l5 -5"/><text class="art-mini" x="18" y="64">OFF</text><circle class="art-win" cx="18" cy="80" r="11"/><path class="art-knob" d="M18 80 L18 71"/><g class="art-done"><circle class="art-okc2" cx="37" cy="88" r="7"/><path class="art-okm2" d="M33.6 88 l2.4 2.5 l4.2 -4.6"/></g><g class="art-done"><circle class="art-okc2" cx="77" cy="80" r="7"/><path class="art-okm2" d="M73.6 80 l2.4 2.5 l4.2 -4.6"/></g></svg>',soapCheck:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="초록색 중간밸브 아래 이음부에 붓으로 비눗물을 발라 거품이 생기는지 확인하는 그림"><rect class="art-gpipe" x="36" y="0" width="14" height="96" rx="2"/><rect class="art-nut" x="32" y="14" width="22" height="7" rx="2"/><rect class="art-gvalve" x="28" y="21" width="30" height="28" rx="7"/><rect class="art-nut" x="32" y="49" width="22" height="9" rx="2"/><rect class="art-gleverb" x="38.5" y="9" width="9" height="52" rx="4.5"/><circle class="art-gknob" cx="43" cy="35" r="5"/><circle class="art-bub" cx="58" cy="60" r="4.5"/><circle class="art-bub" cx="27" cy="57" r="3.5"/><circle class="art-bub" cx="62" cy="52" r="3"/><circle class="art-bub" cx="29" cy="64" r="2.6"/><g class="art-brushg"><rect class="art-brush" x="62" y="20" width="7" height="26" rx="2" transform="rotate(35 65.5 33)"/><rect class="art-bristle" x="51" y="43" width="11" height="9" rx="2" transform="rotate(35 56.5 47.5)"/></g><text class="art-mini" x="17" y="92">매월 4일</text></svg>',gasSink:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="LPG가 바닥에 가라앉아 출입문을 열어 환기하는 그림"><rect class="art-room" x="4" y="8" width="76" height="80" rx="3"/><rect class="art-door" x="56" y="40" width="18" height="48"/><path class="art-gascloud" d="M8 86 q6 -9 14 -4 q6 -8 14 -2 q7 -7 14 0 q4 -3 6 1 V88 H8z"/><path class="art-arrow" d="M28 26 V58"/><path class="art-arrowh" d="M21 51 l7 8 l7 -8"/><path class="art-wind" d="M76 74 h6 M76 80 h8"/></svg>',gasRise:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="도시가스가 위로 올라가 위쪽 창문을 열어 환기하는 그림"><rect class="art-room" x="4" y="8" width="76" height="80" rx="3"/><rect class="art-window" x="52" y="14" width="22" height="18" rx="1"/><path class="art-gascloud" d="M8 12 H48 V20 q-6 6 -12 2 q-6 6 -13 1 q-6 5 -15 0z"/><path class="art-arrow" d="M28 76 V40"/><path class="art-arrowh" d="M21 47 l7 -8 l7 8"/><path class="art-wind" d="M76 20 h6 M76 26 h8"/></svg>',odorant:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="가스에 냄새 나는 물질인 부취제를 넣는 그림"><rect class="art-bottle" x="4" y="10" width="34" height="30" rx="6"/><rect class="art-vent" x="15" y="4" width="12" height="7" rx="2"/><text class="art-mini" x="21" y="29">부취제</text><path class="art-drop" d="M21 46 c3 4 5 6 5 9 a5 5 0 0 1 -10 0 c0 -3 2 -5 5 -9z"/><rect class="art-duct" x="2" y="66" width="80" height="12" rx="3"/><path class="art-odor" d="M50 60 q-4 -5 0 -10 t0 -10"/><path class="art-odor" d="M62 60 q-4 -5 0 -10 t0 -10"/><text class="art-emoji" x="67" y="34">👃</text></svg>',sunShade:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="차양막과 빗물 보호대로 LPG 용기를 햇빛과 비로부터 보호하는 그림"><circle class="art-sun" cx="14" cy="14" r="8"/><path class="art-sunray" d="M14 0 v3 M14 25 v3 M0 14 h3 M25 14 h3 M4 4 l2 2 M22 22 l2 2 M24 4 l-2 2 M4 24 l2 -2"/><path class="art-awning" d="M30 30 L82 22 L82 30 L30 38z"/><path class="art-pipe" d="M36 37 V90 M78 29 V90"/><path class="art-rain" d="M44 6 l-2 6 M56 4 l-2 6 M68 6 l-2 6"/><rect class="art-cyl" x="44" y="48" width="14" height="40" rx="6"/><rect class="art-cyl" x="62" y="48" width="14" height="40" rx="6"/></svg>',coInvisible:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="냄새도 색도 없는 일산화탄소 그림"><path class="art-cocloud" d="M14 52 q-10 0 -10 -10 q0 -10 10 -10 q2 -12 16 -12 q10 0 14 8 q12 -2 14 10 q10 2 10 12 q0 8 -10 8 z" stroke-dasharray="4 4"/><text class="art-cotext2" x="38" y="47">CO</text><path class="art-eye" d="M14 78 q14 -12 28 0 q-14 12 -28 0z"/><circle class="art-eyec" cx="28" cy="78" r="3"/><path class="art-slash" d="M14 88 L42 68"/><text class="art-emoji" x="64" y="88">👃</text><path class="art-slash" d="M54 92 L74 70"/></svg>',campTent:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="밀폐된 텐트 안에서 가스를 쓰면 일산화탄소가 차는 그림"><path class="art-tent" d="M42 8 L80 86 H4z"/><path class="art-tentdoor" d="M42 8 L32 86 M42 8 L52 86"/><path class="art-gascloud2" d="M22 52 q4 -8 12 -4 q6 -6 14 0 q8 -2 10 6 q-6 6 -14 2 q-8 6 -16 0 q-6 2 -6 -4z"/><text class="art-cotext3" x="42" y="57">CO</text><rect class="art-body" x="32" y="72" width="20" height="10" rx="2"/><g transform="translate(0,18) scale(1) scale(1)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g></svg>',coAlarm:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="천장에 단 일산화탄소 경보기가 울리는 그림"><rect class="art-ceil" x="2" y="2" width="80" height="8"/><path class="art-pipe" d="M42 10 V16"/><circle class="art-alarm" cx="42" cy="34" r="18"/><circle class="art-alarmled" cx="42" cy="28" r="4"/><text class="art-mini" x="42" y="44">CO</text><path class="art-wave" d="M18 26 q-6 8 0 16 M12 22 q-9 12 0 24 M66 26 q6 8 0 16 M72 22 q9 12 0 24"/><text class="art-mini2" x="42" y="74">삐-삐-</text></svg>',bigPlate:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="부탄캔을 덮는 큰 불판을 쓰면 부탄캔이 가열되는 그림"><path class="art-x" d="M33 2 L51 20 M51 2 L33 20"/><g transform="translate(0.6,13.5) scale(0.7)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><rect class="art-plate" x="2" y="42" width="80" height="7" rx="3"/><rect class="art-body" x="6" y="58" width="74" height="26" rx="4"/><defs><radialGradient id="hgB"><stop offset="0" stop-color="#E4572E" stop-opacity=".95"/><stop offset=".55" stop-color="#F08A24" stop-opacity=".45"/><stop offset="1" stop-color="#F08A24" stop-opacity="0"/></radialGradient></defs><ellipse class="art-hotglow" cx="68.0" cy="71.0" rx="17" ry="17" fill="url(#hgB)"/><rect class="art-hotcan" x="62" y="62" width="12" height="18" rx="2.5"/></svg>',foilGrill:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="알루미늄 호일로 감싼 석쇠를 불판처럼 쓰면 부탄캔이 폭발할 수 있는 그림"><path class="art-burst" d="M70 6 l3 8 l8 -3 l-5 7 l7 5 l-9 1 l1 9 l-6 -7 l-6 6 l1 -9 l-8 -2 l7 -5 l-4 -8 l8 4z"/><g transform="translate(0.6,13.5) scale(0.7)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><rect class="art-foil" x="2" y="40" width="80" height="9" rx="2"/><path class="art-foilline" d="M8 44 h10 M24 45 h12 M42 44 h8 M56 45 h12"/><rect class="art-body" x="6" y="58" width="74" height="26" rx="4"/><defs><radialGradient id="hgC"><stop offset="0" stop-color="#E4572E" stop-opacity=".95"/><stop offset=".55" stop-color="#F08A24" stop-opacity=".45"/><stop offset="1" stop-color="#F08A24" stop-opacity="0"/></radialGradient></defs><ellipse class="art-hotglow" cx="68.0" cy="71.0" rx="17" ry="17" fill="url(#hgC)"/><rect class="art-hotcan" x="62" y="62" width="12" height="18" rx="2.5"/></svg>',awayValve:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="장기 외출 전 여행 가방에 짐을 넣어 닫고, 초록색 중간밸브가 잠겼는지 확인하는 그림"><g class="art-packcase"><rect class="art-shirt" x="13" y="30" width="20" height="10" rx="2"/><path class="art-shirtl" d="M18 30 l5 5 l5 -5"/></g><path class="art-boxin" d="M4 56 H42 V62 H4 Z"/><rect class="art-case2" x="2" y="60" width="42" height="26" rx="4"/><path class="art-casebelt" d="M2 70 H44"/><g class="art-lidg"><rect class="art-lid2" x="2" y="52" width="42" height="9" rx="3"/><path class="art-casehandle2" d="M17 52 v-4 h12 v4"/></g><rect class="art-gpipe" x="59" y="0" width="14" height="96" rx="2"/><rect class="art-nut" x="55" y="24" width="22" height="7" rx="2"/><rect class="art-nut" x="55" y="61" width="22" height="7" rx="2"/><rect class="art-gvalve" x="51" y="31" width="30" height="30" rx="7"/><rect class="art-gleverb" x="45" y="41" width="42" height="10" rx="5"/><circle class="art-gknob" cx="66" cy="46" r="6"/><circle class="art-okc" cx="70" cy="82" r="9"/><path class="art-okm" d="M65.5 82 l3 3.2 l5.5 -6"/></svg>',gasSmell:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="가스레인지 주변에서 가스 냄새를 확인하는 그림"><path class="art-odor" d="M14 50 q-5 -6 0 -12 t0 -12 t0 -12"/><path class="art-odor" d="M28 50 q-5 -6 0 -12 t0 -12 t0 -12"/><path class="art-odor" d="M42 50 q-5 -6 0 -12 t0 -12"/><text class="art-emoji" x="66" y="34">👃</text><rect class="art-duct" x="2" y="54" width="62" height="8" rx="3"/><rect class="art-vent" x="12" y="50" width="12" height="4" rx="2"/><rect class="art-vent" x="40" y="50" width="12" height="4" rx="2"/><rect class="art-body" x="4" y="62" width="58" height="30" rx="4"/><circle class="art-win" cx="20" cy="77" r="5.5"/><circle class="art-win" cx="46" cy="77" r="5.5"/></svg>',twoBurners:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="휴대용 버너 두 대를 붙여 쓰면 옆 버너 열이 부탄캔을 가열하는 그림"><path class="art-x" d="M30 6 L48 24 M48 6 L30 24"/><g transform="translate(-26,-4)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><g transform="translate(16,-4)"><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/></g><rect class="art-body" x="1" y="60" width="40" height="24" rx="4"/><rect class="art-body" x="43" y="60" width="40" height="24" rx="4"/><defs><radialGradient id="hgA"><stop offset="0" stop-color="#E4572E" stop-opacity=".95"/><stop offset=".55" stop-color="#F08A24" stop-opacity=".45"/><stop offset="1" stop-color="#F08A24" stop-opacity="0"/></radialGradient></defs><ellipse class="art-hotglow" cx="33.5" cy="72.0" rx="17" ry="17" fill="url(#hgA)"/><rect class="art-hotcan" x="29" y="63" width="9" height="18" rx="2.5"/><rect class="art-can" x="71" y="63" width="9" height="18" rx="2.5"/></svg>',moveD3:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="이사 3일 전 달력 옆에서 이삿짐을 상자에 넣고 상자를 접어 테이프로 붙이는 그림"><rect class="art-body" x="2" y="8" width="36" height="38" rx="4"/><path class="art-calhead" d="M2 12 a4 4 0 0 1 4 -4 h28 a4 4 0 0 1 4 4 v6 h-36 z"/><path class="art-pipe" d="M11 4 v8 M29 4 v8"/><text class="art-d3s" x="20" y="38">D-3</text><rect class="art-box" x="4" y="66" width="34" height="26" rx="2"/><path class="art-boxtape" d="M4 74 H38 M21 66 V74"/><g class="art-packbox"><rect class="art-item1" x="56" y="34" width="14" height="10" rx="1.5"/><path class="art-item1l" d="M59 39 h8"/></g><path class="art-boxin" d="M45 56 H81 V64 H45 Z"/><rect class="art-box" x="44" y="62" width="38" height="30" rx="2"/><rect class="art-flapL" x="44" y="58" width="19" height="4.5" rx="1"/><rect class="art-flapR" x="63" y="58" width="19" height="4.5" rx="1"/><path class="art-tapeA" d="M63 57 V72"/></svg>',lpgSwap:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="LPG 용기 밸브를 공구로 직접 돌리지 말라는 금지 그림"><path class="art-hose" d="M30 22 H18 Q10 22 10 30 V40"/><rect class="art-cyl" x="16" y="34" width="38" height="58" rx="13"/><text class="art-cyltext" x="35" y="68">LPG</text><rect class="art-valve" x="28" y="18" width="14" height="17" rx="3"/><path class="art-wrench-h" d="M55 18 L68 31"/><path class="art-wrench" d="M56.5 12.5 a5.5 5.5 0 1 0 -4 9.5 l1 -3.5 l3.5 -1 z"/><circle class="art-ban" cx="60" cy="23" r="17"/><path class="art-ban" d="M48 35 L72 11"/></svg>',flueJoint:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="보일러 배기통 이음부가 벌어져 배기가스가 새어 나오는 그림"><rect class="art-duct" x="26" y="2" width="14" height="22" rx="2" transform="rotate(7 33 24)"/><rect class="art-duct" x="23" y="30" width="14" height="24" rx="2"/><rect class="art-band" x="21" y="29" width="18" height="5" rx="1.5"/><g class="art-smoke"><circle cx="44" cy="25" r="5"/><circle cx="52" cy="20" r="6.5"/><circle cx="54" cy="29" r="5"/><circle cx="62" cy="23" r="5"/><circle cx="14" cy="24" r="4"/></g><rect class="art-co" x="52" y="35" width="28" height="15" rx="7.5"/><text class="art-cotext" x="66" y="46.2">CO</text><rect class="art-body" x="10" y="54" width="40" height="38" rx="5"/><rect class="art-vent" x="18" y="60" width="24" height="3" rx="1.5"/><circle class="art-win" cx="30" cy="77" r="7"/></svg>',openHeater:'<svg class="rule-art" viewBox="0 0 84 96" role="img" aria-label="배기통 없이 실내로 배기가스를 내보내는 개방형 온수기 그림"><g class="art-smoke"><circle cx="32" cy="27" r="8"/><circle cx="43" cy="21" r="9"/><circle cx="55" cy="26" r="7.5"/><circle cx="37" cy="12" r="6.5"/><circle cx="48" cy="9" r="5.5"/></g><rect class="art-co" x="54" y="2" width="28" height="15" rx="7.5"/><text class="art-cotext" x="68" y="13.2">CO</text><rect class="art-body" x="22" y="34" width="40" height="44" rx="6"/><rect class="art-vent" x="30" y="38" width="24" height="3" rx="1.5"/><rect class="art-win" x="32" y="47" width="20" height="16" rx="3"/><path class="art-flame" d="M43 48c1 3 5 5 5 9.5a6 6 0 0 1-12 0c0-2.6 1.6-4.2 2.6-5.6c.4 1.8 1.2 2.6 2.2 2.8c-.4-2.6.6-4.8 2.2-6.7z"/><path class="art-core" d="M42 55.5c1.3 1.4 2.2 2.4 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-1.2.9-2.2 2.2-3.6z"/><path class="art-pipe" d="M42 78v6h14"/><path class="art-pipe" d="M56 84v4"/><path class="art-water" d="M56 91.5c1.2 1.5 1.8 2.4 1.8 3.1a1.8 1.8 0 0 1-3.6 0c0-.7.6-1.6 1.8-3.1z"/></svg>'};
 const ORDER=["bath","boiler","outside","kitchen","living","door"];
 const TAG={do:"이렇게 해요",dont:"하면 안 돼요",know:"알아 둬요",tip:"연관 TIP"};
 // 지금 가스 종류에서 보이는 장소들 (도시가스 집은 집 밖 제외)
@@ -1115,8 +1229,7 @@ function setMode(m){
   if(showOut){ out.setAttribute("role","button"); out.removeAttribute("aria-hidden"); } else { out.removeAttribute("role"); out.setAttribute("aria-hidden","true"); }
   document.querySelectorAll('#chips button[data-id="outside"]').forEach(b=>b.hidden=!showOut);
   if(!showOut && current==="outside"){ current="kitchen"; picked=false; if($("panel").classList.contains("open")) $("panel").classList.remove("open"); }
-  $("gasTag").textContent = gasTagText();
-  placeGasTag();
+  placeGasTag(); setGasTag();
   $("modeNote").innerHTML = mode==="lpg" ? '<span class="gi">LPG</span><span>용기로 공급해요 · 공기보다 무거워요</span>' : '<span class="gi">도시가스</span><span>땅속 배관으로 공급해요 · 공기보다 가벼워요</span>';
   store.set("gasmap-mode",mode);
   render();
@@ -1274,15 +1387,21 @@ const narrowMQ=window.matchMedia("(max-width:660px)");
 function fitSvgToScreen(){
   const m=narrowMQ.matches;
   // 휴대폰: 가스 선택 창이 방을 가리지 않게 집 위쪽 하늘을 더 넓게
-  $("svg").setAttribute("viewBox", m ? "0 -110 732 630" : "0 -40 732 560");
+  $("svg").setAttribute("viewBox", m ? "0 -110 732 712" : "0 -40 732 622");
   document.querySelectorAll(".pin .pinbody").forEach(g=>{ if(m) g.setAttribute("transform","scale(1.23)"); else g.removeAttribute("transform"); });
-  placeGasTag();
-  $("gasTag").textContent=gasTagText();
+  placeGasTag(); setGasTag();
 }
 function placeGasTag(){
   const m=window.matchMedia("(max-width:660px)").matches, lng=mode==="lng", t=$("gasTag");
-  t.setAttribute("x", lng ? (m?132:136) : (m?132:200));
-  t.setAttribute("y", lng ? (m?446:457) : (m?466:458));
+  t.setAttribute("x", m?250:240);
+  t.setAttribute("y", m?503:497);
+}
+function setGasTag(){
+  const t=$("gasTag"), lng=mode==="lng", m=narrowMQ.matches, x=t.getAttribute("x");
+  while(t.firstChild) t.removeChild(t.firstChild);
+  (lng ? ["도시가스 누출 시 천장으로 ↑"] : ["LPG 누출 시 바닥에 ↓"]).forEach((s,i)=>{ const sp=document.createElementNS("http://www.w3.org/2000/svg","tspan"); sp.setAttribute("x",x); if(i) sp.setAttribute("dy","0.98em"); sp.textContent=s; t.appendChild(sp); });
+  t.classList.toggle("tight", m);
+  const ln=$("leakNote"); if(ln) ln.textContent = lng ? "도시가스 누출 시 천장으로 ↑" : "LPG 누출 시 바닥에 ↓";
 }
 function gasTagText(){
   const m=narrowMQ.matches;
